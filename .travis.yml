@@ -1,0 +1,39 @@
+language: php
+dist: trusty
+sudo: false
+
+php:
+  - 7.1
+  - 7.2
+  - 7.3
+  - 7.4
+  - hhvm
+  - nightly
+
+matrix:
+  allow_failures:
+    - php: hhvm
+      dist: trusty
+    - php: nightly
+  include:
+    - php: hhvm
+      dist: trusty
+  fast_finish: true
+
+cache:
+  directories:
+    - $HOME/.composer/cache
+
+before_script:
+  - travis_retry composer update --no-interaction --prefer-dist
+
+script:
+  - vendor/bin/phpcs --standard=phpcs.xml.dist src/
+  - vendor/bin/phpunit --coverage-text --coverage-clover=coverage.clover
+
+after_script:
+  - |
+    if [[ "$TRAVIS_PHP_VERSION" != 'hhvm' ]] || [[ "$TRAVIS_PHP_VERSION" != 7.1 ]]; then
+      wget https://scrutinizer-ci.com/ocular.phar
+      php ocular.phar code-coverage:upload --format=php-clover coverage.clover
+    fi

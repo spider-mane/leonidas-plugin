@@ -1,0 +1,23 @@
+{
+  "name": "leonidas/leonidas-plugin",
+  "description": "Starter package for creating a Leonidas based WordPress plugin",
+  "homepage": "https://github.com/spider-mane/leonidas-plugin",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Chris Williams",
+      "email": "spider.mane.web@gmail.com",
+      "homepage": "https://github.com/spider-mane",
+      "role": "Developer"
+    }
+  ],
+  "scripts": {
+    "test": "vendor/bin/phpunit",
+    "post-create-project-cmd": [
+      "prefill"
+    ]
+  },
+  "config": {
+    "sort-packages": true
+  }
+}
