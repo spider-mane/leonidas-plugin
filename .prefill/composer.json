@@ -18,6 +18,7 @@
   ],
   "require": {
     "php": "^7.3",
+    "composer/installers": "^1.10",
     "guzzlehttp/psr7": "^1.6",
     "hassankhan/config": "^2.1",
     "jbzoo/utils": "^4.2",
@@ -27,8 +28,11 @@
     "webtheory/saveyour": "^0.2.5"
   },
   "require-dev": {
+    "coenjacobs/mozart": "0.7.1",
     "filp/whoops": "^2.5",
     "friendsofphp/php-cs-fixer": "^2.15",
+    "johnpbloch/wordpress": "^5.7",
+    "leonidas/leonidas": "^1.0",
     "phpbench/phpbench": "@dev",
     "phpunit/phpunit": "^8.2",
     "psy/psysh": "^0.9.9",
@@ -57,6 +61,9 @@
   "extra": {
     "branch-alias": {
       "dev-master": "1.0-dev"
+    },
+    "leonidas-composer": {
+      "repackage": true
     }
   },
   "config": {

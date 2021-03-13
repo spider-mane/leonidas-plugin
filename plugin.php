@@ -16,9 +16,9 @@
  * Description: :description
  */
 
+use Noodlehaus\ConfigInterface;
 use Psr\Container\ContainerInterface;
 use WebTheory\Leonidas\Enum\ExtensionType;
-use WebTheory\Leonidas\Framework\Config;
 use WebTheory\Leonidas\Framework\ModuleInitializer;
 use WebTheory\Leonidas\Framework\WpExtension;
 
@@ -35,7 +35,7 @@ if (file_exists($development = __DIR__ . '/boot/development.php')) {
 /** @var ContainerInterface $container */
 $container = require __DIR__ . '/boot/container.php';
 
-/** @var Config $config */
+/** @var ConfigInterface $config */
 $config = $container->get('config');
 
 $base = WpExtension::create([
@@ -48,7 +48,7 @@ $base = WpExtension::create([
     'assets' => $config->get('plugin.assets'),
     'type' => new ExtensionType('plugin'),
     'container' => $container,
-    'dev' => ':plugin_name_DEVELOPMENT',
+    'dev' => ':plugin_name_uc_DEVELOPMENT',
 ]);
 
 $plugin = new ModuleInitializer($base, $base->config('app.modules'));

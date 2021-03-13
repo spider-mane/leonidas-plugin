@@ -11,6 +11,10 @@
       "role": "Developer"
     }
   ],
+  "require-dev": {
+    "johnpbloch/wordpress": "^5.7",
+    "webtheory/leonidas": "^1.0"
+  },
   "scripts": {
     "test": "vendor/bin/phpunit",
     "post-create-project-cmd": [
