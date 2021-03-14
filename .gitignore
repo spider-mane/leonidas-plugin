@@ -1,26 +1,29 @@
-# WordPress (included for code completion)
+# Wordpress (included for code completion)
 /wordpress/
-!/wordpress/wp-content/plugins/leonidas/plugin.php
-
-# Env
-.env
-
-# Composer
-/vendor
-composer.lock
 
 # CI output
-/build
+/build/
 /coverage
 
 # PHPUnit
 .phpunit.result.cache
 
+# Composer
+vendor/
+composer.lock
+composer.phar
+
+# Env
+.env
+
 # Editor/ IDE
 .idea
 .project
-.vscode/
+.vscode
 *.code-workspace
 
-# Apple hidden files
+# Version Control
+.github
+
+# System files
 .DS_Store
