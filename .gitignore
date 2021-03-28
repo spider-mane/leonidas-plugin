@@ -1,9 +1,8 @@
 # Wordpress (included for code completion)
 /wordpress/
 
-# CI output
+# Dev and CI builds
 /build/
-/coverage
 
 # PHPUnit
 .phpunit.result.cache
@@ -11,19 +10,16 @@
 # Composer
 vendor/
 composer.lock
-composer.phar
 
-# Env
+# Environment variables
 .env
 
 # Editor/ IDE
-.idea
-.project
-.vscode
+.idea/
+.project/
+.vscode/
 *.code-workspace
-
-# Version Control
-.github
 
 # System files
 .DS_Store
+Thumbs.db

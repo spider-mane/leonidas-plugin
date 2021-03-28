@@ -1,4 +1,4 @@
-# :package_name
+# Leonidas Plugin Starter
 
 [![Latest Version on Packagist][ico-version]][link-packagist]
 [![Software License][ico-license]](LICENSE.md)
@@ -7,49 +7,19 @@
 [![Quality Score][ico-code-quality]][link-code-quality]
 [![Total Downloads][ico-downloads]][link-downloads]
 
-**Note:** Replace `:author_name` `:author_username` `:author_website` `:author_email` `:vendor_name` `:package_name` `:package_description` with their correct values in [README.md](README.md), [CHANGELOG.md](CHANGELOG.md), [CONTRIBUTING.md](CONTRIBUTING.md), [LICENSE.md](LICENSE.md) and [composer.json](composer.json) files, then delete this line. You can run `$ php prefill` in the command line to make all replacements at once.
-
-This is where your description should go. Try and limit it to a paragraph or two, and maybe throw in a mention of what
-PSRs you support to avoid any confusion with users and contributors.
-
-## Structure
-
-If any of the following are applicable to your project, then the directory structure should follow industry best practices by being named the following.
-
-```
-bin/
-build/
-docs/
-config/
-src/
-tests/
-vendor/
-```
+## This Project is not yet functional
 
 ## Install
 
 Via Composer
 
 ```bash
-$ composer require :vendor_name/:package_name
-```
-
-## Usage
-
-```php
-$skeleton = new :vendor_name\:package_name\Skeleton();
-echo $skeleton->echoPhrase('Sup Fam!');
+composer create-project leonidas/leonidas-plugin
 ```
 
 ## Change log
 
 Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
-
-## Testing
-
-```bash
-$ composer test
-```
 
 ## Contributing
 
@@ -57,27 +27,28 @@ Please see [CONTRIBUTING](CONTRIBUTING.md) and [CODE_OF_CONDUCT](CODE_OF_CONDUCT
 
 ## Security
 
-If you discover any security related issues, please email :author_email instead of using the issue tracker.
+If you discover any security related issues, please email spider.mane.web@gmail.com instead of using the issue tracker.
 
 ## Credits
 
-* [:author_name][link-author]
+* [Chris Williams][link-author]
 * [All Contributors][link-contributors]
 
 ## License
 
 The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
 
-[ico-version]: https://img.shields.io/packagist/v/:vendor_name/:package_name.svg?style=flat-square
+[ico-version]: https://img.shields.io/packagist/v/spider-mane/leonidas-plugin.svg?style=flat-square
 [ico-license]: https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square
-[ico-travis]: https://img.shields.io/travis/:vendor_github/:package_name/master.svg?style=flat-square
-[ico-scrutinizer]: https://img.shields.io/scrutinizer/coverage/g/:vendor_github/:package_name.svg?style=flat-square
-[ico-code-quality]: https://img.shields.io/scrutinizer/g/:vendor_github/:package_name.svg?style=flat-square
-[ico-downloads]: https://img.shields.io/packagist/dt/:vendor_name/:package_name.svg?style=flat-square
-[link-packagist]: https://packagist.org/packages/:vendor_name/:package_name
-[link-travis]: https://travis-ci.org/:vendor_github/:package_name
-[link-scrutinizer]: https://scrutinizer-ci.com/g/:vendor_github/:package_name/code-structure
-[link-code-quality]: https://scrutinizer-ci.com/g/:vendor_github/:package_name
-[link-downloads]: https://packagist.org/packages/:vendor_name/:package_name
-[link-author]: https://github.com/:author_username
+[ico-travis]: https://img.shields.io/travis/spider-mane/leonidas-plugin/master.svg?style=flat-square
+[ico-scrutinizer]: https://img.shields.io/scrutinizer/coverage/g/spider-mane/leonidas-plugin.svg?style=flat-square
+[ico-code-quality]: https://img.shields.io/scrutinizer/g/spider-mane/leonidas-plugin.svg?style=flat-square
+[ico-downloads]: https://img.shields.io/packagist/dt/spider-mane/leonidas-plugin.svg?style=flat-square
+
+[link-packagist]: https://packagist.org/packages/spider-mane/leonidas-plugin
+[link-travis]: https://travis-ci.org/spider-mane/leonidas-plugin
+[link-scrutinizer]: https://scrutinizer-ci.com/g/spider-mane/leonidas-plugin/code-structure
+[link-code-quality]: https://scrutinizer-ci.com/g/spider-mane/leonidas-plugin
+[link-downloads]: https://packagist.org/packages/spider-mane/leonidas-plugin
+[link-author]: https://github.com/spider-mane
 [link-contributors]: ../../contributors

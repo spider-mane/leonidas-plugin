@@ -1,5 +1,6 @@
 {
   "name": "leonidas/leonidas-plugin",
+  "type": "project",
   "description": "Starter package for creating a Leonidas based WordPress plugin",
   "homepage": "https://github.com/spider-mane/leonidas-plugin",
   "license": "MIT",
@@ -11,17 +12,74 @@
       "role": "Developer"
     }
   ],
+  "require": {
+    "php": "^7.3",
+    "composer/installers": "^1.10",
+    "guzzlehttp/psr7": "^1.6",
+    "hassankhan/config": "^2.1",
+    "league/container": "^3.3",
+    "psr/container": "^1.1",
+    "voku/stringy": "^6.4",
+    "webtheory/guctilitybelt": "^0.2.0",
+    "webtheory/html": "^0.2.0",
+    "webtheory/saveyour": "^0.2.5"
+  },
   "require-dev": {
+    "coenjacobs/mozart": "0.7.1",
+    "humbug/php-scoper": "^0.14.0",
+    "filp/whoops": "^2.5",
+    "friendsofphp/php-cs-fixer": "^2.15",
     "johnpbloch/wordpress": "^5.7",
-    "webtheory/leonidas": "^1.0"
+    "monolog/monolog": "^1.24",
+    "lucatume/wp-browser": "3.0.5.1",
+    "fakerphp/faker": "^1.13",
+    "phpbench/phpbench": "@dev",
+    "phpunit/phpunit": "^8.2",
+    "psy/psysh": "^0.10.7",
+    "spatie/phpunit-watcher": "^1.12",
+    "squizlabs/php_codesniffer": "^3.0",
+    "symfony/var-dumper": "^4.3"
+  },
+  "autoload": {
+    "psr-4": {
+      "PseudoVendor\\PseudoNamespace\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Tests\\Fixtures\\": "tests/fixtures/",
+      "Tests\\Unit\\": "tests/unit/"
+    },
+    "files": [
+      "boot/development.php"
+    ]
   },
   "scripts": {
-    "test": "vendor/bin/phpunit",
     "post-create-project-cmd": [
-      "prefill"
+      "php prefill.php"
+    ],
+    "test": "vendor/bin/phpunit",
+    "watch": "phpunit-watcher watch",
+    "check": "vendor/bin/phpcs",
+    "fix": "vendor/bin/phpcbf",
+    "bench": "vendor/bin/phpbench",
+    "debug": "vendor/bin/psych",
+    "build": [
+      "@fix",
+      "@check",
+      "@test"
     ]
   },
   "config": {
-    "sort-packages": true
-  }
+    "preferred-install": "dist",
+    "sort-packages": true,
+    "process-timeout": 0
+  },
+  "extra": {
+    "coltrane": {
+      "manage-dependencies": true
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
 }

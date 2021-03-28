@@ -1,6 +1,9 @@
 <?xml version="1.0"?>
 <ruleset name=":package_name">
-  <description>The :package_name package coding standard</description>
+  <description>:package_name coding standard</description>
+
+  <!-- File paths -->
+  <file>./src</file>
 
   <!-- Args -->
   <arg value="p"/>
