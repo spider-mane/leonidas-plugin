@@ -1,108 +1,31 @@
 <?php
 
-namespace PseudoVendor\PseudoNamespace;
+namespace PseudoVendor\PseudoPlugin;
 
 use Leonidas\Contracts\Extension\WpExtensionInterface;
-use Leonidas\Enum\ExtensionType;
 use Leonidas\Framework\Exceptions\PluginAlreadyLoadedException;
-use Leonidas\Framework\ModuleInitializer;
-use Leonidas\Framework\WpExtension;
-use Psr\Container\ContainerInterface;
 
 final class PseudoPlugin
 {
     /**
-     * @var string
+     * @var WpExtensionInterface
      */
-    private $base;
-
-    /**
-     * @var string
-     */
-    private $path;
-
-    /**
-     * @var string
-     */
-    private $url;
-
-    /**
-     * @var ContainerInterface
-     */
-    private $container;
-
-    /**
-     * @var WpExtension
-     */
-    private $extension;
+    protected $base;
 
     /**
      * @var PseudoPlugin
      */
     private static $instance;
 
-    private function __construct(string $base, string $path, string $url)
+    private function __construct(WpExtensionInterface $base)
     {
         $this->base = $base;
-        $this->path = $path;
-        $this->url = $url;
-        $this->container = $this->buildContainer();
-        $this->extension = $this->buildExtension();
     }
 
-    private function buildContainer(): ContainerInterface
-    {
-        return require $this->path . '/boot/container.php';
-    }
-
-    private function buildExtension(): WpExtensionInterface
-    {
-        $config = [$this->container->get('config'), 'get'];
-
-        return WpExtension::create([
-            'name' => $config('plugin.name'),
-            'prefix' => $config('plugin.prefix.short'),
-            'description' => $config('plugin.description'),
-            'base' => $this->base,
-            'path' => $this->path,
-            'url' => $this->url,
-            'assets' => $config('plugin.assets'),
-            'dev' => $config('plugin.dev'),
-            'type' => new ExtensionType($config('plugin.type')),
-            'container' => $this->container
-        ]);
-    }
-
-    private function reallyReallyInit(): void
-    {
-        $this
-            ->bootstrapFromHelpers()
-            ->initializeModules();
-    }
-
-    private function initializeModules(): PseudoPlugin
-    {
-        (new ModuleInitializer($this->extension, $this->getModules()))->init();
-
-        return $this;
-    }
-
-    private function getModules(): array
-    {
-        return $this->extension->config('app.modules');
-    }
-
-    private function bootstrapFromHelpers(): PseudoPlugin
-    {
-        foreach ($this->extension->config('app.bootstrap', []) as $assistant) {
-            $assistant->bootstrap($this->extension);
-        }
-    }
-
-    public static function init(string $base, string $path, string $uri): void
+    public static function launch(WpExtensionInterface $base): void
     {
         if (!self::isLoaded()) {
-            self::reallyInit($base, $path, $uri);
+            self::create($base);
         }
 
         self::throwAlreadyLoadedException(__METHOD__);
@@ -113,16 +36,15 @@ final class PseudoPlugin
         return isset(self::$instance) && (self::$instance instanceof self);
     }
 
-    private static function reallyInit(string $base, string $path, string $uri): void
+    private static function create(WpExtensionInterface $base): void
     {
-        self::$instance = new self($base, $path, $uri);
-        self::$instance->reallyReallyInit();
+        self::$instance = new self($base);
     }
 
     private static function throwAlreadyLoadedException(callable $method): void
     {
         throw new PluginAlreadyLoadedException(
-            self::$instance->getExtension()->getName(),
+            self::$instance->base->getName(),
             $method
         );
     }

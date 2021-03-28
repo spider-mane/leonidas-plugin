@@ -1,5 +1,6 @@
 {
   "name": ":vendor_name/:plugin_name",
+  "version": ":plugin_version",
   "description": ":plugin_description",
   "type": "wordpress-plugin",
   "homepage": ":plugin_website",

@@ -13,7 +13,9 @@ return [
      * DI container, they can be designed in a way makes them portable and
      * reusable between projects.
      */
-    'modules' => [],
+    'modules' => [
+        PseudoVendor\PseudoPlugin\Setup::class
+    ],
 
     /**
      * * Services
@@ -58,7 +60,7 @@ return [
      * * Bootstrap
      *
      * Bootstrap assistants are classes you can use to encapsulate your
-     * bootstrap requirements. Useful for keeping your main/bootstrap class
+     * bootstrap requirements. Useful for keeping your Launcher class
      * clean and being able to reuse bootstrap processes between extensions.
      */
     'bootstrap' => [],

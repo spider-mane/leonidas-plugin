@@ -1,5 +1,6 @@
 {
   "name": "leonidas/leonidas-plugin",
+  "version": "0.1.0",
   "type": "project",
   "description": "Starter package for creating a Leonidas based WordPress plugin",
   "homepage": "https://github.com/spider-mane/leonidas-plugin",
@@ -42,7 +43,7 @@
   },
   "autoload": {
     "psr-4": {
-      "PseudoVendor\\PseudoNamespace\\": "src/"
+      "PseudoVendor\\PseudoPlugin\\": "src/"
     }
   },
   "autoload-dev": {
@@ -59,7 +60,7 @@
       "php prefill.php"
     ],
     "test": "vendor/bin/phpunit",
-    "watch": "phpunit-watcher watch",
+    "watch": "vendor/bin/phpunit-watcher",
     "check": "vendor/bin/phpcs",
     "fix": "vendor/bin/phpcbf",
     "bench": "vendor/bin/phpbench",

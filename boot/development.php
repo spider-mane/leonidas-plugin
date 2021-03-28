@@ -1,3 +1,11 @@
 <?php
 
-define(':plugin_cap_key_DEVELOPMENT', 1);
+use Whoops\Handler\PrettyPageHandler;
+use Whoops\Run;
+
+define(':plugin_cap_name_DEVELOPMENT', 1);
+
+# display errors in dev environment
+ini_set('display_errors', '1');
+
+(new Run())->prependHandler(new PrettyPageHandler())->register();

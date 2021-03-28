@@ -17,14 +17,14 @@
  */
 
 use Leonidas\Framework\Helpers\Plugin;
-use PseudoVendor\PseudoNamespace\PseudoPlugin;
+use PseudoVendor\PseudoPlugin\Launcher;
 
 defined('ABSPATH') || exit;
 
 require __DIR__ . '/boot/init.php';
 
-PseudoPlugin::init(
+Launcher::init(
     Plugin::base(__FILE__),
     Plugin::path(__DIR__),
-    Plugin::url(__DIR__),
+    Plugin::url(__DIR__)
 );
