@@ -3,10 +3,11 @@
 ################################################################################
 # Config
 ################################################################################
+$root = dirname(__DIR__, 1);
 
 $userName = trim(shell_exec('git config user.name'));
 $userEmail = trim(shell_exec('git config user.email'));
-$packageName = strtolower(basename(__DIR__));
+$packageName = strtolower(basename($root));
 $pluginName = ucwords(str_replace(['-', '_'], ' ', $packageName));
 
 $fields = [
@@ -90,7 +91,6 @@ $replacements = [
   }
 ];
 
-$root = dirname(__DIR__, 1);
 $prefill = $root . '/.prefill';
 
 $files = array_merge(
