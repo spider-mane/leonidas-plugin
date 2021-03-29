@@ -33,16 +33,16 @@
   },
   "require-dev": {
     "coenjacobs/mozart": "0.7.1",
-    "humbug/php-scoper": "^0.14.0",
+    "fakerphp/faker": "^1.13",
     "filp/whoops": "^2.5",
     "friendsofphp/php-cs-fixer": "^2.15",
-    "johnpbloch/wordpress": "^5.7",
-    "monolog/monolog": "^1.24",
+    "humbug/php-scoper": "^0.14.0",
     "lucatume/wp-browser": "3.0.5.1",
-    "fakerphp/faker": "^1.13",
+    "monolog/monolog": "^1.24",
     "phpbench/phpbench": "@dev",
     "phpunit/phpunit": "^9.5",
     "psy/psysh": "^0.10.7",
+    "roots/wordpress": "^5.7",
     "spatie/phpunit-watcher": "^1.12",
     "squizlabs/php_codesniffer": "^3.0",
     "symfony/var-dumper": "^4.3",
@@ -81,7 +81,7 @@
       "php bin/prefill",
       "@wp-config"
     ],
-    "post-update-cmd": [
+    "0post-update-cmd": [
       "@link"
     ]
   },
@@ -103,7 +103,8 @@
       "wordpress/wp-content/themes/{$name}/": [
         "type:wordpress-theme"
       ]
-    }
+    },
+    "wordpress-install-dir": "wordpress"
   },
   "minimum-stability": "dev",
   "prefer-stable": true
