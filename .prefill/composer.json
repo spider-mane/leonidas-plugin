@@ -1,5 +1,5 @@
 {
-  "name": ":vendor_name/:plugin_name",
+  "name": ":vendor_name/:package_name",
   "version": ":plugin_version",
   "description": ":plugin_description",
   "type": "wordpress-plugin",
@@ -18,7 +18,7 @@
   ],
   "autoload": {
     "psr-4": {
-      ":vendor_name\\:plugin_name\\": "src/"
+      "PseudoVendor\\PseudoPlugin\\": "src/"
     }
   }
 }

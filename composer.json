@@ -56,18 +56,20 @@
     ]
   },
   "scripts": {
-    "post-install-cmd": [
-      "php prefill.php"
-    ],
     "post-create-project-cmd": [
-      "php prefill.php"
+      "php bin/prefill"
     ],
+    "post-install-cmd": [
+      "@link"
+    ],
+    "wp-config": "cp wordpress/wp-config-sample.php wp-config.php",
+    "link": "php bin/symlink-plugin",
     "test": "vendor/bin/phpunit",
     "watch": "vendor/bin/phpunit-watcher",
     "check": "vendor/bin/phpcs",
     "fix": "vendor/bin/phpcbf",
     "bench": "vendor/bin/phpbench",
-    "debug": "vendor/bin/psych",
+    "play": "vendor/bin/psysh",
     "build": [
       "@fix",
       "@check",

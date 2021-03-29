@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <ruleset name=":package_name">
-  <description>The :package_name package coding standard</description>
+  <description>The :plugin_name package coding standard</description>
 
   <!-- Args -->
   <arg value="p"/>

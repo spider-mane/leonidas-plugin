@@ -1,0 +1,8 @@
+<?php
+
+$root = dirname(__DIR__, 1);
+$link = realpath($root . '/wordpress/wp-content/plugins/' . basename($root));
+$conf = realpath($root . '/tests/wp-config.php');
+
+symlink($root, $link);
+symlink($conf, realpath($root . '/wordpress') . '/wp-config.php');

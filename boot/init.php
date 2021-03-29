@@ -2,7 +2,7 @@
 
 defined('ABSPATH') || exit;
 
-$root = dirname(__FILE__, 1);
+$root = dirname(__FILE__, 2);
 
 require __DIR__ . '/functions.php';
 require __DIR__ . '/constants.php';

@@ -1,5 +1,6 @@
-# Wordpress (included for code completion)
+# Wordpress
 /wordpress/
+wp-config.php
 
 # Dev and CI builds
 /build/
@@ -8,11 +9,19 @@
 .phpunit.result.cache
 
 # Composer
-vendor/
+/vendor/
 composer.lock
 
-# Environment variables
+# Env files
 .env
+.env.*
+.*.env
+*.env
+!.env.example
+!.example.env
+
+# Docker
+docker-compose.override.yml
 
 # Editor/ IDE
 .idea/

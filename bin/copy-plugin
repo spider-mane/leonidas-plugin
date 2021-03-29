@@ -1,0 +1,30 @@
+<?php
+
+$root = dirname(__DIR__, 1);
+$assets = '/assets/dist';
+$file = 'plugin.php';
+
+exit(var_dump(basename($root)));
+
+$pluginDir = $root . '/wordpress/wp-content/plugins/' . basename($root);
+$assetDir = $pluginDir . $assets;
+
+$boot = '/boot/init.php';
+$original = "__DIR__ . '{$boot}'";
+$modified = rtrim(str_repeat('../', 4), '/') . $boot;
+// $modified = realpath($root . $boot);
+
+// exit(var_dump(
+//   realpath($root . $assets),
+//   realpath($assetDir)
+// ));
+
+if (!file_exists($pluginDir)) {
+  mkdir($assetDir, 0777, true);
+  symlink(realpath($root . $assets), realpath($assetDir));
+}
+
+$content = file_get_contents("$root/$file");
+$updated = str_replace($original, "'{$modified}'", $content);
+
+file_put_contents("$pluginDir/$file", $updated);
