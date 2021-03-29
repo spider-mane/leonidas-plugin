@@ -108,14 +108,21 @@ $files = array_merge(
   glob($prefill . '/*.xml.dist'),
   glob($prefill . '/composer.json'),
   glob($prefill . '/package.json'),
-  $root . '/phpcs.xml.dist',
-  $root . '/phpunit.xml.dist',
+  [
+    $root . '/phpcs.xml.dist',
+  ],
 
   // php boilerplate
+  glob($root . '/src/*.php'),
   glob($root . '/src/**/*.php'),
-  glob($root . '/config/**/*.php'),
-  glob($root . '/boot/development.php'),
-  glob($root . '/tests/**/*.php')
+  glob($root . '/src/**/**/*.php'),
+  glob($root . '/config/*.php'),
+  glob($root . '/tests/*.php'),
+  glob($root . '/tests/**/*.php'),
+  glob($root . '/tests/**/**/*.php'),
+  [
+    $root . '/boot/development.php'
+  ]
 
   // js boilerplate
 
@@ -216,8 +223,8 @@ foreach ($files as $file) {
 
 echo "All done! Happy coding!\n";
 
-shell_exec('rm ' . basename(__FILE__));
-shell_exec("rm -rf " . $prefill);
+// shell_exec('rm ' . basename(__FILE__));
+// shell_exec("rm -rf " . $prefill);
 
 ################################################################################
 # Functions
