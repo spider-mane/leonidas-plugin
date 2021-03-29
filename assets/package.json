@@ -1,0 +1,14 @@
+{
+  "name": "leonidas-plugin",
+  "version": "0.1.0",
+  "description": "Starter for Leonidas WordPress plugin",
+  "author": {
+    "name": "Chris Williams",
+    "email": "spider.mane.web@gmail.com",
+    "url": "https://github.com/spider-mane"
+  },
+  "dependencies": {},
+  "devDependencies": {},
+  "scripts": {},
+  "config": {}
+}

@@ -77,23 +77,21 @@ final class Launcher
     {
         $this
             ->initializeModules()
-            ->getFurtherAssistance()
+            ->requestAssistance()
             ->launchPseudoPlugin();
     }
 
     private function initializeModules(): Launcher
     {
-        (new ModuleInitializer($this->extension, $this->getModules()))->init();
+        (new ModuleInitializer(
+            $this->extension,
+            $this->extension->config('app.modules')
+        ))->init();
 
         return $this;
     }
 
-    private function getModules(): array
-    {
-        return $this->extension->config('app.modules');
-    }
-
-    private function getFurtherAssistance(): Launcher
+    private function requestAssistance(): Launcher
     {
         foreach ($this->extension->config('app.bootstrap', []) as $assistant) {
             (new $assistant($this->extension))->bootstrap();
@@ -102,11 +100,13 @@ final class Launcher
         return $this;
     }
 
-    private function launchPseudoPlugin(): void
+    private function launchPseudoPlugin(): Launcher
     {
         if (class_exists(PseudoPlugin::class)) {
             PseudoPlugin::launch($this->extension);
         }
+
+        return $this;
     }
 
     public static function init(string $base, string $path, string $url): void

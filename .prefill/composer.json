@@ -10,7 +10,7 @@
   ],
   "authors": [
     {
-      "name": ":author_name",
+      "name": ":plugin_author",
       "email": ":author_email",
       "homepage": ":author_website",
       "role": "Developer"

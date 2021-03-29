@@ -56,6 +56,9 @@
     ]
   },
   "scripts": {
+    "post-install-cmd": [
+      "php prefill.php"
+    ],
     "post-create-project-cmd": [
       "php prefill.php"
     ],

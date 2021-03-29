@@ -1,0 +1,10 @@
+{
+  "name": ":plugin_name",
+  "version": ":plugin_version",
+  "description": ":plugin_description",
+  "author": {
+    "name": ":plugin_author",
+    "email": ":author_email",
+    "url": ":author_website"
+  }
+}

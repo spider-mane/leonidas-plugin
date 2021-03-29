@@ -1,6 +1,6 @@
 # The MIT License (MIT)
 
-Copyright (c) :system_year :author_name <:author_email>
+Copyright (c) :system_year :plugin_author <:author_email>
 
 > Permission is hereby granted, free of charge, to any person obtaining a copy
 > of this software and associated documentation files (the "Software"), to deal
