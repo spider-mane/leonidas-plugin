@@ -50,6 +50,33 @@ $replacements = [
   },
 
   // basic info
+  ':plugin_name' => function () use (&$values) {
+    return $values['plugin_name'];
+  },
+  'Pseudo Plugin' => function () use (&$values) {
+    return $values['plugin_name'];
+  },
+  ':package_name' => function () use (&$values) {
+    return $values['package_name'];
+  },
+  'pseudo-package' => function () use (&$values) {
+    return $values['package_name'];
+  },
+  'PSEUDO_CONSTANT' => function () use (&$values) {
+    return str_replace('-', '_', strtoupper($values['package_name']));
+  },
+  ':plugin_prefix' => function () use (&$values) {
+    return $values['plugin_prefix'];
+  },
+  ':plugin_version' => function () use (&$values) {
+    return $values['plugin_version'];
+  },
+  ':plugin_website' => function () use (&$values) {
+    return $values['plugin_website'];
+  },
+  ':plugin_description' => function () use (&$values) {
+    return $values['plugin_description'];
+  },
   ':plugin_author' => function () use (&$values) {
     return $values['author_name'];
   },
@@ -68,24 +95,6 @@ $replacements = [
   ':vendor_github' => function () use (&$values) {
     return $values['vendor_github'];
   },
-  ':plugin_name' => function () use (&$values) {
-    return $values['plugin_name'];
-  },
-  ':plugin_cap_name' => function () use (&$values) {
-    return strtoupper($values['package_name']);
-  },
-  ':package_name' => function () use (&$values) {
-    return $values['package_name'];
-  },
-  ':plugin_prefix' => function () use (&$values) {
-    return $values['plugin_prefix'];
-  },
-  ':plugin_website' => function () use (&$values) {
-    return $values['plugin_website'];
-  },
-  ':plugin_description' => function () use (&$values) {
-    return $values['plugin_description'];
-  },
   ':system_year' => function () {
     return date('Y');
   }
@@ -99,6 +108,8 @@ $files = array_merge(
   glob($prefill . '/*.xml.dist'),
   glob($prefill . '/composer.json'),
   glob($prefill . '/package.json'),
+  $root . '/phpcs.xml.dist',
+  $root . '/phpunit.xml.dist',
 
   // php boilerplate
   glob($root . '/src/**/*.php'),
@@ -110,6 +121,8 @@ $files = array_merge(
 
   // css boilerplate
 );
+
+exit(var_dump($files));
 
 // files to be relocated to a directory that is not the project root
 $nonStandard = [];

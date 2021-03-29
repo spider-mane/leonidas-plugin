@@ -2,4 +2,6 @@
 
 $root = dirname(__FILE__, 2);
 
-require $root . '/boot/development.php';
+if (file_exists($autoload = $root . '/vendor/autoload.php')) {
+    require $autoload;
+}

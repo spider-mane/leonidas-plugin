@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
-<ruleset name=":package_name">
-  <description>:package_name coding standard</description>
+<ruleset name="pseudo-package">
+  <description>Pseudo Plugin coding standard</description>
 
   <!-- File paths -->
   <file>./src</file>
