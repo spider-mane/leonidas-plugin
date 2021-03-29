@@ -13,6 +13,12 @@
       "role": "Developer"
     }
   ],
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://wpackagist.org"
+    }
+  ],
   "require": {
     "php": "^7.3",
     "composer/installers": "^1.10",
@@ -56,13 +62,7 @@
     ]
   },
   "scripts": {
-    "post-create-project-cmd": [
-      "php bin/prefill"
-    ],
-    "post-install-cmd": [
-      "@link"
-    ],
-    "wp-config": "cp wordpress/wp-config-sample.php wp-config.php",
+    "wp-config": "cp -n wordpress/wp-config-sample.php wp-config.php",
     "link": "php bin/symlink-plugin",
     "test": "vendor/bin/phpunit",
     "watch": "vendor/bin/phpunit-watcher",
@@ -74,16 +74,33 @@
       "@fix",
       "@check",
       "@test"
+    ],
+    "post-create-project-cmd": [
+      "php bin/prefill"
+    ],
+    "post-install-cmd": [
+      "@link",
+      "@wp-config"
     ]
   },
   "config": {
-    "preferred-install": "dist",
     "sort-packages": true,
     "process-timeout": 0
   },
   "extra": {
     "coltrane": {
       "manage-dependencies": true
+    },
+    "installer-paths": {
+      "wordpress/wp-content/plugins/{$name}": [
+        "type:wordpress-plugin"
+      ],
+      "wordpress/app/mu-plugins/{$name}/": [
+        "type:wordpress-muplugin"
+      ],
+      "wordpress/app/themes/{$name}/": [
+        "type:wordpress-theme"
+      ]
     }
   },
   "minimum-stability": "dev",

@@ -10,7 +10,7 @@ return [
 
     'description' => ':description',
 
-    'assets' => '/assets/dist',
+    'assets' => 'assets/dist/',
 
     'dependencies' => [],
 ];

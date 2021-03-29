@@ -113,9 +113,9 @@ final class Launcher
     {
         if (!self::isLoaded()) {
             self::reallyInit($base, $path, $url);
+        } else {
+            self::throwAlreadyLoadedException(__METHOD__);
         }
-
-        self::throwAlreadyLoadedException(__METHOD__);
     }
 
     private static function isLoaded(): bool

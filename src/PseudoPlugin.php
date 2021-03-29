@@ -25,10 +25,10 @@ final class PseudoPlugin
     public static function launch(WpExtensionInterface $base): void
     {
         if (!self::isLoaded()) {
-            self::create($base);
+            self::construct($base);
+        } else {
+            self::throwAlreadyLoadedException(__METHOD__);
         }
-
-        self::throwAlreadyLoadedException(__METHOD__);
     }
 
     private static function isLoaded(): bool
@@ -36,7 +36,7 @@ final class PseudoPlugin
         return isset(self::$instance) && (self::$instance instanceof self);
     }
 
-    private static function create(WpExtensionInterface $base): void
+    private static function construct(WpExtensionInterface $base): void
     {
         self::$instance = new self($base);
     }

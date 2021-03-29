@@ -70,6 +70,9 @@ $replacements = [
   ':plugin_name' => function () use (&$values) {
     return $values['plugin_name'];
   },
+  ':plugin_cap_name' => function () use (&$values) {
+    return strtoupper($values['package_name']);
+  },
   ':package_name' => function () use (&$values) {
     return $values['package_name'];
   },

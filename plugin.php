@@ -25,6 +25,6 @@ require __DIR__ . '/boot/init.php';
 
 Launcher::init(
     Plugin::base(__FILE__),
-    Plugin::path(__DIR__),
-    Plugin::url(__DIR__)
+    Plugin::path(__FILE__),
+    Plugin::url(__FILE__)
 );
