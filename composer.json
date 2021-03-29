@@ -62,14 +62,14 @@
     ]
   },
   "scripts": {
-    "wp-config": "cp -n wordpress/wp-config-sample.php wp-config.php",
-    "link": "php bin/symlink-plugin",
     "test": "vendor/bin/phpunit",
     "watch": "vendor/bin/phpunit-watcher",
     "check": "vendor/bin/phpcs",
     "fix": "vendor/bin/phpcbf",
     "bench": "vendor/bin/phpbench",
     "play": "vendor/bin/psysh",
+    "link": "php bin/symlink-plugin",
+    "wp-config": "cp -n wordpress/wp-config-sample.php wp-config.php",
     "build": [
       "@fix",
       "@check",
@@ -95,10 +95,10 @@
       "wordpress/wp-content/plugins/{$name}": [
         "type:wordpress-plugin"
       ],
-      "wordpress/app/mu-plugins/{$name}/": [
+      "wordpress/wp-content/mu-plugins/{$name}/": [
         "type:wordpress-muplugin"
       ],
-      "wordpress/app/themes/{$name}/": [
+      "wordpress/wp-content/themes/{$name}/": [
         "type:wordpress-theme"
       ]
     }
