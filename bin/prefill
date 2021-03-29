@@ -198,8 +198,7 @@ foreach ($files as $file) {
     $base = $mergeJson[$file] . '/' . $file;
     $new = $merge(
       json_decode(file_get_contents($base), true),
-      json_decode($contents, true),
-      $values
+      json_decode($contents, true)
     );
     file_put_contents($base, json_encode($new));
 
@@ -250,12 +249,14 @@ function interpolate($text, $values)
   return $text;
 }
 
-function merge_composer_json(array $old, array $new, array $values): array
+function merge_composer_json(array $old, array $new): array
 {
+  unset($old['scripts']['post-create-project-cmd']);
+
   return array_merge_recursive($old, $new);
 }
 
-function merge_package_json(array $old, array $new, array $values): array
+function merge_package_json(array $old, array $new): array
 {
   return array_merge_recursive($old, $new);
 }
