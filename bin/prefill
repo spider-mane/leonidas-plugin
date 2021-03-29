@@ -23,7 +23,7 @@ $fields = [
   'package_name' => ['Package name', 'Package or repository name of plugin', $packageName],
   'plugin_prefix' => ['Plugin prefix', 'Abbreviated shorthand ideally 3-5 characters', ''],
   'plugin_version' => ['Plugin version', '', '0.1.0'],
-  'plugin_website' => ['Plugin website', '', 'https://github.com/{vendor_github}/{plugin_name}'],
+  'plugin_website' => ['Plugin website', '', 'https://github.com/{vendor_github}/{package_name}'],
   'plugin_description' => ['Brief description of plugin', '', ''],
 
   'psr4_namespace' => ['PSR-4 namespace', 'example: Vendor\\Plugin', ''],
