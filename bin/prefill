@@ -1,8 +1,9 @@
 <?php
 
-ini_set('xdebug.var_display_max_depth', 10);
-ini_set('xdebug.var_display_max_children', 256);
-ini_set('xdebug.var_display_max_data', 1024);
+// uncomment for debugging
+// ini_set('xdebug.var_display_max_depth', 10);
+// ini_set('xdebug.var_display_max_children', 256);
+// ini_set('xdebug.var_display_max_data', 1024);
 
 ################################################################################
 # Config
@@ -27,6 +28,7 @@ $fields = [
 
   'vendor_name' => ['Vendor name', '', '{author_github_username}'],
   'vendor_github' => ['Vendor Github username', '<username> in https://github.com/username', '{vendor_name}'],
+  'vendor_website' => ['Vendor website', '', 'https://github.com/{vendor_name}'],
 
   'plugin_name' => ['Plugin name', '', $pluginName],
   'package_name' => ['Package name', 'Package or repository name of plugin', $packageName],
@@ -42,66 +44,66 @@ $values = [];
 
 $replacements = [
   // namespace and classes
-  ':vendor_name\\\\:plugin_name\\\\' => function () use (&$values) {
+  ':vendor_name\\\\:plugin_name\\\\' => function ($values) {
     return str_replace('\\', '\\\\', $values['psr4_namespace']) . '\\\\';
   },
-  'PseudoVendor\\\\PseudoPlugin\\\\' => function () use (&$values) {
+  'PseudoVendor\\\\PseudoPlugin\\\\' => function ($values) {
     return str_replace('\\', '\\\\', $values['psr4_namespace']) . '\\\\';
   },
-  'PseudoVendor\\PseudoPlugin' => function () use (&$values) {
+  'PseudoVendor\\PseudoPlugin' => function ($values) {
     return $values['psr4_namespace'];
   },
-  'PseudoPlugin' => function () use (&$values) {
+  'PseudoPlugin' => function ($values) {
     return str_replace(['-', '_'], '', str_replace(['_', '-', ' '], '', ucwords($values['plugin_name'])));
   },
-  'PseudoVersion' => function () use (&$values) {
+  'PseudoVersion' => function ($values) {
     return str_replace('.', '_', $values['plugin_version']);
   },
 
   // basic info
-  ':plugin_name' => function () use (&$values) {
+  ':plugin_name' => function ($values) {
     return $values['plugin_name'];
   },
-  'Pseudo Plugin' => function () use (&$values) {
+  'Pseudo Plugin' => function ($values) {
     return $values['plugin_name'];
   },
-  ':package_name' => function () use (&$values) {
+  ':package_name' => function ($values) {
     return $values['package_name'];
   },
-  'pseudo-package' => function () use (&$values) {
+  'pseudo-package' => function ($values) {
     return $values['package_name'];
   },
-  'PSEUDO_CONSTANT' => function () use (&$values) {
+  'PSEUDO_CONSTANT' => function ($values) {
     return str_replace('-', '_', strtoupper($values['package_name']));
   },
-  ':plugin_prefix' => function () use (&$values) {
+  ':plugin_prefix' => function ($values) {
     return $values['plugin_prefix'];
   },
-  ':plugin_version' => function () use (&$values) {
+  ':plugin_version' => function ($values) {
     return $values['plugin_version'];
   },
-  ':plugin_website' => function () use (&$values) {
+  ':plugin_website' => function ($values) {
     return $values['plugin_website'];
   },
-  ':plugin_description' => function () use (&$values) {
+  ':plugin_description' => function ($values) {
     return $values['plugin_description'];
   },
-  ':plugin_author' => function () use (&$values) {
+  ':plugin_author' => function ($values) {
     return $values['author_name'];
   },
-  ':author_username' => function () use (&$values) {
+  ':author_username' => function ($values) {
     return $values['author_github_username'];
   },
-  ':author_website' => function () use (&$values) {
+  ':author_website' => function ($values) {
     return $values['author_website'];
   },
-  ':author_email' => function () use (&$values) {
+  ':author_email' => function ($values) {
     return $values['author_email'];
   },
-  ':vendor_name' => function () use (&$values) {
+  ':vendor_name' => function ($values) {
     return $values['vendor_name'];
   },
-  ':vendor_github' => function () use (&$values) {
+  ':vendor_github' => function ($values) {
     return $values['vendor_github'];
   },
   ':system_year' => function () {
@@ -110,7 +112,7 @@ $replacements = [
 ];
 
 $renames = [
-  'src/Activation/vPseudoVersion.php' => function () use (&$values, $replacements) {
+  'src/Activation/vPseudoVersion.php' => function ($values) use ($replacements) {
     return 'v' . call_user_func($replacements['PseudoVersion'], $values) . '.php';
   }
 ];
@@ -142,8 +144,6 @@ $files = array_merge(
 
   // css boilerplate
 );
-
-// exit(var_dump($files));
 
 // files to be relocated to a directory that is not the project root
 $nonStandard = [
@@ -226,7 +226,7 @@ foreach ($files as $file) {
   // update content
   $contents = file_get_contents($file);
   foreach ($replacements as $str => $update) {
-    $contents = str_replace($str, $update(), $contents);
+    $contents = str_replace($str, $update($values), $contents);
   }
 
   // resolve output file
@@ -251,7 +251,7 @@ foreach ($files as $file) {
 // rename files
 foreach ($renames as $file => $rename) {
   $file = realpath("$root/$file");
-  rename($file, dirname($file) . '/' . $rename());
+  rename($file, dirname($file) . '/' . $rename($values));
 }
 // delete files
 array_map('unlink', $delete);
@@ -259,8 +259,8 @@ array_map('unlink', $delete);
 echo "All done! Happy coding!\n";
 
 // delete prefill files
-// shell_exec('rm ' . basename(__FILE__));
-// shell_exec("rm -rf " . $prefill);
+shell_exec('rm ' . __FILE__);
+shell_exec("rm -rf " . $prefill);
 
 // refresh git
 // echo shell_exec('rm -rf .git') . "\n";
