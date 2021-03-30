@@ -12,18 +12,21 @@
 $root = dirname(__DIR__, 1);
 $prefill = $root . '/.prefill';
 
-$userName = trim(shell_exec('git config user.name')) ?: 'Carl Marks';
-$userEmail = trim(shell_exec('git config user.email')) ?: 'carl@marks.co';
+$userName = trim(shell_exec('git config user.name'));
+$userEmail = trim(shell_exec('git config user.email'));
 $packageName = strtolower(basename($root));
 $pluginName = ucwords(str_replace(['-', '_'], ' ', $packageName));
 
-$packageName = 'fake-plugin';
-$pluginName  = 'Totally Fake Plugin';
+// populate for faster testing
+$authorGithub = '';
+$pluginPrefix = '';
+$pluginDescription = '';
+$psr4Namespace = '';
 
 $fields = [
   'author_name' => ['Your name', '', $userName],
   'author_email' => ['Your email address', '', $userEmail],
-  'author_github_username' => ['Your Github username', '<username> in https://github.com/username', 'markscism'],
+  'author_github_username' => ['Your Github username', '<username> in https://github.com/username', $authorGithub],
   'author_website' => ['Your website', '', 'https://github.com/{author_github_username}'],
 
   'vendor_name' => ['Vendor name', '', '{author_github_username}'],
@@ -32,12 +35,12 @@ $fields = [
 
   'plugin_name' => ['Plugin name', '', $pluginName],
   'package_name' => ['Package name', 'Package or repository name of plugin', $packageName],
-  'plugin_prefix' => ['Plugin prefix', 'Abbreviated shorthand ideally 3-5 characters', 'tfp'],
+  'plugin_prefix' => ['Plugin prefix', 'Abbreviated shorthand ideally 3-5 characters', $pluginPrefix],
   'plugin_version' => ['Plugin version', '', '0.1.0'],
   'plugin_website' => ['Plugin website', '', 'https://github.com/{vendor_github}/{package_name}'],
-  'plugin_description' => ['Brief description of plugin', '', 'something something about class warfare.'],
+  'plugin_description' => ['Brief description of plugin', '', $pluginDescription],
 
-  'psr4_namespace' => ['PSR-4 namespace', 'example: Vendor\\Plugin', 'Marks\\Ingles'],
+  'psr4_namespace' => ['PSR-4 namespace', 'example: Vendor\\Plugin', $psr4Namespace],
 ];
 
 $values = [];
@@ -150,7 +153,7 @@ $nonStandard = [
   'package.json' => '/assets'
 ];
 
-// files whose contents should be merged with
+// json files whose contents should be merged with boilerplate
 $mergeJson = [
   'composer.json' => function (array $old, array $new): array {
     $composer = array_replace_recursive($old, $new);
@@ -220,21 +223,19 @@ do {
 } while (($modify = strtolower(read_from_console('Modify files with these values? [y/N/q] '))) != 'y');
 echo "\n";
 
-echo "Updating file content\n";
-
+// update boilerplate
 foreach ($files as $file) {
-  // update content
   $contents = file_get_contents($file);
   foreach ($replacements as $str => $update) {
     $contents = str_replace($str, $update($values), $contents);
   }
 
-  // resolve output file
+  // resolve absolute path
   $base = basename($file);
   $path = $nonStandard[$base] ?? (str_replace([$prefill, $root, $base], '', $file));
-  $file = preg_replace('~/+~', '/', "$root/$path/$base"); /// new absolute path
+  $file = preg_replace('~/+~', '/', "$root/$path/$base");
 
-  // selectively merge json files
+  // merge json files
   if (isset($mergeJson[$base])) {
     $merge = $mergeJson[$base];
     $merged = $merge(
@@ -244,7 +245,6 @@ foreach ($files as $file) {
     $contents = encode_format_json($merged);
   }
 
-  // update file
   file_put_contents($file, $contents);
 }
 
@@ -253,18 +253,19 @@ foreach ($renames as $file => $rename) {
   $file = realpath("$root/$file");
   rename($file, dirname($file) . '/' . $rename($values));
 }
+
 // delete files
 array_map('unlink', $delete);
-
-echo "All done! Happy coding!\n";
 
 // delete prefill files
 shell_exec('rm ' . __FILE__);
 shell_exec("rm -rf " . $prefill);
 
 // refresh git
-// echo shell_exec('rm -rf .git') . "\n";
-// echo shell_exec('git init') . "\n";
+shell_exec("cd $root && rm -rf .git") . "\n";
+echo shell_exec("git init") . "\n";
+
+echo "All done! Thanks for using Leonidas!\n";
 
 ################################################################################
 # Functions
