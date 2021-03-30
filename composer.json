@@ -13,6 +13,13 @@
       "role": "Developer"
     }
   ],
+  "keywords": [
+    "wordpress",
+    "leonidas",
+    "boilerplate",
+    "plugin",
+    "theme"
+  ],
   "repositories": [
     {
       "type": "composer",
@@ -82,7 +89,7 @@
       "php bin/prefill",
       "@wp-config"
     ],
-    "0post-update-cmd": [
+    "post-update-cmd": [
       "@link"
     ]
   },

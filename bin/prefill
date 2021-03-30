@@ -4,7 +4,9 @@
 # Config
 ################################################################################
 
-use function Patchwork\Utils\normalizePath;
+ini_set('xdebug.var_display_max_depth', 10);
+ini_set('xdebug.var_display_max_children', 256);
+ini_set('xdebug.var_display_max_data', 1024);
 
 $root = dirname(__DIR__, 1);
 $prefill = $root . '/.prefill';
@@ -50,7 +52,7 @@ $replacements = [
     return $values['psr4_namespace'];
   },
   'PseudoPlugin' => function () use (&$values) {
-    return str_replace(['-', '_'], '', ucwords($values['plugin_name']));
+    return str_replace(['-', '_'], '', str_replace(['_', '-', ' '], '', ucwords($values['plugin_name'])));
   },
   'PseudoVersion' => function () use (&$values) {
     return str_replace('.', '_', $values['plugin_version']);
@@ -108,7 +110,7 @@ $replacements = [
 ];
 
 $renames = [
-  'src/Activation/PseudoVersion.php' => function () use (&$values, $replacements) {
+  'src/Activation/vPseudoVersion.php' => function () use (&$values, $replacements) {
     return 'v' . call_user_func($replacements['PseudoVersion'], $values) . '.php';
   }
 ];
@@ -124,15 +126,16 @@ $files = array_merge(
   ],
 
   // php boilerplate
+  glob($root . '/boot/*.php'),
+  glob($root . '/config/*.php'),
   glob($root . '/src/*.php'),
   glob($root . '/src/**/*.php'),
   glob($root . '/src/**/**/*.php'),
-  glob($root . '/config/*.php'),
   glob($root . '/tests/*.php'),
   glob($root . '/tests/**/*.php'),
   glob($root . '/tests/**/**/*.php'),
   [
-    $root . '/boot/development.php'
+    $root . '/plugin.php',
   ]
 
   // js boilerplate
@@ -150,17 +153,24 @@ $nonStandard = [
 // files whose contents should be merged with
 $mergeJson = [
   'composer.json' => function (array $old, array $new): array {
-    unset($old['scripts']['post-create-project-cmd']);
 
-    return array_merge_recursive($old, $new);
+    $json = array_replace_recursive($old, $new);
+    $json['autoload']['psr-4'] = $new['autoload']['psr-4'];
+
+    unset($json['scripts']['post-create-project-cmd']);
+
+    // exit(var_dump($json));
+
+    return $json;
   },
+
   'package.json' => function (array $old, array $new): array {
-    return array_merge_recursive($old, $new);
+
+    $json = array_replace_recursive($old, $new);
+
+    return $json;
   }
 ];
-
-
-
 
 // files to delete
 $delete = [];
@@ -224,16 +234,7 @@ foreach ($files as $file) {
   // determine output file by disassembling then reconstructing accordingly
   $base = basename($file);
   $path = $nonStandard[$base] ?? (str_replace([$prefill, $root, $base], '', $file));
-  $file = $root . '/' . $path  . '/' . $base; // new absolute path
-  $file = preg_replace('~/+~', '/', $file); // strip redundant slashes
-
-  // exit(var_dump([
-  //   'root' => $root,
-  //   'path' => $path,
-  //   'base' => $base,
-  //   'file' => $file,
-  //   'real' => file_exists($file)
-  // ]));
+  $file = preg_replace('~/+~', '/', "$root/$path/$base"); /// new absolute path
 
   // merge specified json files
   if (isset($mergeJson[$base])) {
@@ -242,7 +243,8 @@ foreach ($files as $file) {
       json_decode(file_get_contents($file), true),
       json_decode($contents, true)
     );
-    file_put_contents($file, json_encode($new));
+    $flags = JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_FORCE_OBJECT;
+    file_put_contents($file, json_encode($new, $flags));
 
     continue;
   }
@@ -251,16 +253,13 @@ foreach ($files as $file) {
   file_put_contents($file, $contents);
 }
 
-exit;
-
 // rename files
 foreach ($renames as $file => $rename) {
-  rename($file, $rename());
+  $file = realpath("$root/$file");
+  rename($file, dirname($file) . '/' . $rename());
 }
-
-// array_map('unlink', $delete);
-
-// echo shell_exec('sed -i -e "/^\*\*Note:\*\* Replace/d" README.md') . "\n";
+// delete files
+array_map('unlink', $delete);
 
 echo "All done! Happy coding!\n";
 
