@@ -5,8 +5,10 @@
   "type": "wordpress-plugin",
   "homepage": ":plugin_website",
   "keywords": [
+    ":plugin_name",
     ":vendor_name",
-    ":plugin_name"
+    "wordpress",
+    "plugin"
   ],
   "authors": [
     {

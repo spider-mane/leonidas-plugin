@@ -1,12 +1,12 @@
 <?php
 
-################################################################################
-# Config
-################################################################################
-
 ini_set('xdebug.var_display_max_depth', 10);
 ini_set('xdebug.var_display_max_children', 256);
 ini_set('xdebug.var_display_max_data', 1024);
+
+################################################################################
+# Config
+################################################################################
 
 $root = dirname(__DIR__, 1);
 $prefill = $root . '/.prefill';
@@ -153,20 +153,23 @@ $nonStandard = [
 // files whose contents should be merged with
 $mergeJson = [
   'composer.json' => function (array $old, array $new): array {
-    $json = array_replace_recursive($old, $new);
-    $json['authors'] = $new['authors'];
-    $json['keywords'] = array_merge($old['keywords'], $new['keywords']);
-    $json['autoload']['psr-4'] = $new['autoload']['psr-4'];
+    $composer = array_replace_recursive($old, $new);
+    $composer['authors'] = $new['authors'];
+    $composer['keywords'] = $new['keywords'];
+    $composer['autoload']['psr-4'] = $new['autoload']['psr-4'];
 
-    unset($json['scripts']['post-create-project-cmd']);
-    sort($json['keywords']);
+    unset(
+      $composer['scripts']['fill'],
+      $composer['scripts']['post-create-project-cmd']
+    );
+    sort($composer['keywords']);
 
-    return $json;
+    return $composer;
   },
   'package.json' => function (array $old, array $new): array {
-    $json = array_replace_recursive($old, $new);
+    $package = array_replace_recursive($old, $new);
 
-    return $json;
+    return $package;
   }
 ];
 
@@ -220,7 +223,7 @@ echo "\n";
 echo "Updating file content\n";
 
 foreach ($files as $file) {
-  // updated content
+  // update content
   $contents = file_get_contents($file);
   foreach ($replacements as $str => $update) {
     $contents = str_replace($str, $update(), $contents);
@@ -238,9 +241,7 @@ foreach ($files as $file) {
       json_decode(file_get_contents($file), true),
       json_decode($contents, true)
     );
-    // $flags = JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES;
-    // $contents = str_replace('    ', '  ', json_encode($merged, $flags)) . "\n";
-    $contents = format_json($merged);
+    $contents = encode_format_json($merged);
   }
 
   // update file
@@ -257,13 +258,13 @@ array_map('unlink', $delete);
 
 echo "All done! Happy coding!\n";
 
-// refresh git
-// echo shell_exec('rm -rf .git') . "\n";
-// echo shell_exec('git init') . "\n";
-
 // delete prefill files
 // shell_exec('rm ' . basename(__FILE__));
 // shell_exec("rm -rf " . $prefill);
+
+// refresh git
+// echo shell_exec('rm -rf .git') . "\n";
+// echo shell_exec('git init') . "\n";
 
 ################################################################################
 # Functions
@@ -295,7 +296,7 @@ function interpolate($text, $values)
   return $text;
 }
 
-function format_json(array $json): string
+function encode_format_json(array $json): string
 {
   $flags = JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES;
   $json = json_encode($json, $flags);
