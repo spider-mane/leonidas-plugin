@@ -153,19 +153,17 @@ $nonStandard = [
 // files whose contents should be merged with
 $mergeJson = [
   'composer.json' => function (array $old, array $new): array {
-
     $json = array_replace_recursive($old, $new);
+    $json['authors'] = $new['authors'];
+    $json['keywords'] = array_merge($old['keywords'], $new['keywords']);
     $json['autoload']['psr-4'] = $new['autoload']['psr-4'];
 
     unset($json['scripts']['post-create-project-cmd']);
-
-    // exit(var_dump($json));
+    sort($json['keywords']);
 
     return $json;
   },
-
   'package.json' => function (array $old, array $new): array {
-
     $json = array_replace_recursive($old, $new);
 
     return $json;
@@ -219,37 +217,33 @@ do {
 } while (($modify = strtolower(read_from_console('Modify files with these values? [y/N/q] '))) != 'y');
 echo "\n";
 
-// echo shell_exec('rm -rf .git') . "\n";
-// echo shell_exec('git init') . "\n";
-
 echo "Updating file content\n";
 
 foreach ($files as $file) {
-  // create updated boilerplate
+  // updated content
   $contents = file_get_contents($file);
   foreach ($replacements as $str => $update) {
     $contents = str_replace($str, $update(), $contents);
   }
 
-  // determine output file by disassembling then reconstructing accordingly
+  // resolve output file
   $base = basename($file);
   $path = $nonStandard[$base] ?? (str_replace([$prefill, $root, $base], '', $file));
   $file = preg_replace('~/+~', '/', "$root/$path/$base"); /// new absolute path
 
-  // merge specified json files
+  // selectively merge json files
   if (isset($mergeJson[$base])) {
     $merge = $mergeJson[$base];
-    $new = $merge(
+    $merged = $merge(
       json_decode(file_get_contents($file), true),
       json_decode($contents, true)
     );
-    $flags = JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_FORCE_OBJECT;
-    file_put_contents($file, json_encode($new, $flags));
-
-    continue;
+    // $flags = JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES;
+    // $contents = str_replace('    ', '  ', json_encode($merged, $flags)) . "\n";
+    $contents = format_json($merged);
   }
 
-  // update boilerplate content
+  // update file
   file_put_contents($file, $contents);
 }
 
@@ -263,6 +257,11 @@ array_map('unlink', $delete);
 
 echo "All done! Happy coding!\n";
 
+// refresh git
+// echo shell_exec('rm -rf .git') . "\n";
+// echo shell_exec('git init') . "\n";
+
+// delete prefill files
 // shell_exec('rm ' . basename(__FILE__));
 // shell_exec("rm -rf " . $prefill);
 
@@ -294,4 +293,12 @@ function interpolate($text, $values)
     $text = str_replace($str, $values[$f], $text);
   }
   return $text;
+}
+
+function format_json(array $json): string
+{
+  $flags = JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES;
+  $json = json_encode($json, $flags);
+
+  return str_replace('    ', '  ', $json) . "\n";
 }
