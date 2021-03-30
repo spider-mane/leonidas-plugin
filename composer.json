@@ -64,6 +64,7 @@
     ]
   },
   "scripts": {
+    "fill": "php bin/prefill",
     "test": "vendor/bin/phpunit",
     "watch": "vendor/bin/phpunit-watcher",
     "check": "vendor/bin/phpcs",

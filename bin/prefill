@@ -3,17 +3,24 @@
 ################################################################################
 # Config
 ################################################################################
-$root = dirname(__DIR__, 1);
 
-$userName = trim(shell_exec('git config user.name'));
-$userEmail = trim(shell_exec('git config user.email'));
+use function Patchwork\Utils\normalizePath;
+
+$root = dirname(__DIR__, 1);
+$prefill = $root . '/.prefill';
+
+$userName = trim(shell_exec('git config user.name')) ?: 'Carl Marks';
+$userEmail = trim(shell_exec('git config user.email')) ?: 'carl@marks.co';
 $packageName = strtolower(basename($root));
 $pluginName = ucwords(str_replace(['-', '_'], ' ', $packageName));
+
+$packageName = 'fake-plugin';
+$pluginName  = 'Totally Fake Plugin';
 
 $fields = [
   'author_name' => ['Your name', '', $userName],
   'author_email' => ['Your email address', '', $userEmail],
-  'author_github_username' => ['Your Github username', '<username> in https://github.com/username', ''],
+  'author_github_username' => ['Your Github username', '<username> in https://github.com/username', 'markscism'],
   'author_website' => ['Your website', '', 'https://github.com/{author_github_username}'],
 
   'vendor_name' => ['Vendor name', '', '{author_github_username}'],
@@ -21,12 +28,12 @@ $fields = [
 
   'plugin_name' => ['Plugin name', '', $pluginName],
   'package_name' => ['Package name', 'Package or repository name of plugin', $packageName],
-  'plugin_prefix' => ['Plugin prefix', 'Abbreviated shorthand ideally 3-5 characters', ''],
+  'plugin_prefix' => ['Plugin prefix', 'Abbreviated shorthand ideally 3-5 characters', 'tfp'],
   'plugin_version' => ['Plugin version', '', '0.1.0'],
   'plugin_website' => ['Plugin website', '', 'https://github.com/{vendor_github}/{package_name}'],
-  'plugin_description' => ['Brief description of plugin', '', ''],
+  'plugin_description' => ['Brief description of plugin', '', 'something something about class warfare.'],
 
-  'psr4_namespace' => ['PSR-4 namespace', 'example: Vendor\\Plugin', ''],
+  'psr4_namespace' => ['PSR-4 namespace', 'example: Vendor\\Plugin', 'Marks\\Ingles'],
 ];
 
 $values = [];
@@ -100,10 +107,14 @@ $replacements = [
   }
 ];
 
-$prefill = $root . '/.prefill';
+$renames = [
+  'src/Activation/PseudoVersion.php' => function () use (&$values, $replacements) {
+    return 'v' . call_user_func($replacements['PseudoVersion'], $values) . '.php';
+  }
+];
 
 $files = array_merge(
-  // service boilerplate
+  // repo boilerplate
   glob($prefill . '/*.md'),
   glob($prefill . '/*.xml.dist'),
   glob($prefill . '/composer.json'),
@@ -129,16 +140,27 @@ $files = array_merge(
   // css boilerplate
 );
 
-exit(var_dump($files));
+// exit(var_dump($files));
 
 // files to be relocated to a directory that is not the project root
-$nonStandard = [];
+$nonStandard = [
+  'package.json' => '/assets'
+];
 
 // files whose contents should be merged with
 $mergeJson = [
-  'composer.json' => $root,
-  'package.json' => $root . '/assets'
+  'composer.json' => function (array $old, array $new): array {
+    unset($old['scripts']['post-create-project-cmd']);
+
+    return array_merge_recursive($old, $new);
+  },
+  'package.json' => function (array $old, array $new): array {
+    return array_merge_recursive($old, $new);
+  }
 ];
+
+
+
 
 // files to delete
 $delete = [];
@@ -195,29 +217,48 @@ echo "Updating file content\n";
 foreach ($files as $file) {
   // create updated boilerplate
   $contents = file_get_contents($file);
-  foreach ($replacements as $str => $func) {
-    $contents = str_replace($str, $func(), $contents);
+  foreach ($replacements as $str => $update) {
+    $contents = str_replace($str, $update(), $contents);
   }
 
+  // determine output file by disassembling then reconstructing accordingly
+  $base = basename($file);
+  $path = $nonStandard[$base] ?? (str_replace([$prefill, $root, $base], '', $file));
+  $file = $root . '/' . $path  . '/' . $base; // new absolute path
+  $file = preg_replace('~/+~', '/', $file); // strip redundant slashes
+
+  // exit(var_dump([
+  //   'root' => $root,
+  //   'path' => $path,
+  //   'base' => $base,
+  //   'file' => $file,
+  //   'real' => file_exists($file)
+  // ]));
+
   // merge specified json files
-  if (isset($mergeJson[$file])) {
-    $merge = 'merge_' . str_replace(['.', '-'], '_', basename($file));
-    $base = $mergeJson[$file] . '/' . $file;
+  if (isset($mergeJson[$base])) {
+    $merge = $mergeJson[$base];
     $new = $merge(
-      json_decode(file_get_contents($base), true),
+      json_decode(file_get_contents($file), true),
       json_decode($contents, true)
     );
-    file_put_contents($base, json_encode($new));
+    file_put_contents($file, json_encode($new));
 
     continue;
   }
 
   // update boilerplate content
-  file_put_contents(
-    $nonStandard[$file] ?? $root . '/' . $file,
-    $contents
-  );
+  file_put_contents($file, $contents);
 }
+
+exit;
+
+// rename files
+foreach ($renames as $file => $rename) {
+  rename($file, $rename());
+}
+
+// array_map('unlink', $delete);
 
 // echo shell_exec('sed -i -e "/^\*\*Note:\*\* Replace/d" README.md') . "\n";
 
@@ -254,16 +295,4 @@ function interpolate($text, $values)
     $text = str_replace($str, $values[$f], $text);
   }
   return $text;
-}
-
-function merge_composer_json(array $old, array $new): array
-{
-  unset($old['scripts']['post-create-project-cmd']);
-
-  return array_merge_recursive($old, $new);
-}
-
-function merge_package_json(array $old, array $new): array
-{
-  return array_merge_recursive($old, $new);
 }
