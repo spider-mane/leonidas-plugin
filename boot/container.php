@@ -11,7 +11,7 @@ $container = new Container();
 
 # provide root directory
 $container->share('root', function () {
-    return dirname(__FILE__, 2);
+    return dirname(__DIR__, 1);
 });
 
 # register config

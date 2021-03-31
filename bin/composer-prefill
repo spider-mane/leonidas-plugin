@@ -1,0 +1,21 @@
+<?php
+
+$prompt = 'prefill';
+$file = "bin/$prompt";
+
+if (PHP_OS === 'WINNT') {
+  $os = 'Windows';
+
+  echo "Composer cannot run scripts containing prompts on $os. Run the $prompt prompt manually by typing 'php $file' in the command line from your project root.";
+
+  exit;
+} else {
+  run_prefill_prompt();
+}
+
+unlink(__FILE__);
+
+function run_prefill_prompt()
+{
+  require __DIR__ . '/prefill';
+}
