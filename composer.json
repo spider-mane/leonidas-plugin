@@ -81,8 +81,9 @@
     ],
     "wpconfig": "cp -n wordpress/wp-config-sample.php wp-config.php",
     "post-create-project-cmd": [
-      "php bin/composer-prefill"
-    ]
+      "@fill"
+    ],
+    "fill": "php bin/composer-prefill"
   },
   "extra": {
     "coltrane": {

@@ -5,15 +5,15 @@
 // ini_set('xdebug.var_display_max_children', 256);
 // ini_set('xdebug.var_display_max_data', 1024);
 
-define('ROOT_DIR', dirname(__DIR__, 1));
-define('PREFILL_DIR', ROOT_DIR . '/.prefill');
+define('ROOT_DIRECTORY', dirname(__DIR__, 1));
+define('PREFILL_DIRECTORY', ROOT_DIRECTORY . '/.prefill');
 
 ################################################################################
 # Config
 ################################################################################
 
-$root = ROOT_DIR;
-$prefill = PREFILL_DIR;
+$root = ROOT_DIRECTORY;
+$prefill = PREFILL_DIRECTORY;
 
 $userName = trim(shell_exec('git config user.name'));
 $userEmail = trim(shell_exec('git config user.email'));
@@ -148,7 +148,7 @@ $locate = [
   'package.json' => '/assets'
 ];
 
-// json files whose contents should be merged with an existing counterpart
+// json files whose contents should be merged with a functional counterpart
 $mergeJsonData = [
   'composer.json' => function (array $old, array $new): array {
     $composer = array_replace_recursive($old, $new);
@@ -156,8 +156,8 @@ $mergeJsonData = [
     $composer['keywords'] = $new['keywords'];
     $composer['autoload']['psr-4'] = $new['autoload']['psr-4'];
     unset(
+      $composer['scripts']['post-create-project-cmd'],
       $composer['scripts']['fill'],
-      $composer['scripts']['post-create-project-cmd']
     );
     return $composer;
   },
@@ -188,8 +188,8 @@ define('COL_DESCRIPTION', 0);
 define('COL_HELP', 1);
 define('COL_DEFAULT', 2);
 
-$root = ROOT_DIR;
-$prefill = PREFILL_DIR;
+$root = ROOT_DIRECTORY;
+$prefill = PREFILL_DIRECTORY;
 $consent = 'Modify files with these values and create new git repository?';
 
 $modify = 'n';
