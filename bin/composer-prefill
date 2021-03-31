@@ -6,9 +6,7 @@ $file = "bin/$prompt";
 if (PHP_OS === 'WINNT') {
   $os = 'Windows';
 
-  echo "Composer cannot run scripts containing prompts on $os. Run the $prompt prompt manually by typing 'php $file' in the command line from your project root.";
-
-  exit;
+  echo "Composer cannot run scripts containing prompts on $os. Run the $prompt prompt manually by typing 'php $file' in the command line from your project root.\n";
 } else {
   run_prefill_prompt();
 }

@@ -80,13 +80,6 @@
       "@test"
     ],
     "wpconfig": "cp -n wordpress/wp-config-sample.php wp-config.php",
-    "post-install-cmd": [
-      "@wpconfig",
-      "@link"
-    ],
-    "post-update-cmd": [
-      "@link"
-    ],
     "post-create-project-cmd": [
       "php bin/composer-prefill"
     ]

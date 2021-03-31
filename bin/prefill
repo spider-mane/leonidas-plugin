@@ -266,7 +266,7 @@ shell_exec('rm ' . __FILE__ . " && rm -rf $prefill");
 
 // refresh git repo
 //! may be helpful to comment this line out while testing and debugging
-// shell_exec("rm -rf $root/.git && git init $root");
+shell_exec("rm -rf $root/.git && git init $root");
 
 // refresh composer autoload
 if (file_exists($root . '/vendor/autoload.php')) {
