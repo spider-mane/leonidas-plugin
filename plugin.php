@@ -8,7 +8,7 @@
  * @package :plugin_name
  * @license MIT
  * @copyright Copyright (C) :plugin_author, All rights reserved.
- * @link :plugin_url
+ * @link :plugin_website
  * @author :plugin_author <:author_email>
  *
  * @wordpress-plugin

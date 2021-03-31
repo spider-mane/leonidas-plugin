@@ -1,6 +1,6 @@
 <?php
 
-namespace PseudoVendor\PseudoPlugin\Setup;
+namespace PseudoVendor\PseudoPlugin\Activation;
 
 use Leonidas\Contracts\Extension\PluginActivatorInterface;
 use Leonidas\Contracts\Extension\WpExtensionInterface;

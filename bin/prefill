@@ -155,23 +155,23 @@ $mergeJsonData = [
     $composer['authors'] = $new['authors'];
     $composer['keywords'] = $new['keywords'];
     $composer['autoload']['psr-4'] = $new['autoload']['psr-4'];
-
     unset(
       $composer['scripts']['fill'],
       $composer['scripts']['post-create-project-cmd']
     );
-
     return $composer;
   },
   'package.json' => function (array $old, array $new): array {
     $package = array_replace_recursive($old, $new);
-
     return $package;
   }
 ];
 
 // files to rename
 $rename = [
+  'src/PseudoPlugin.php' => function ($values) use ($replacements) {
+    return ($replacements['PseudoPlugin'])($values) . '.php';
+  },
   'src/Activation/vPseudoVersion.php' => function ($values) use ($replacements) {
     return 'v' . ($replacements['PseudoVersion'])($values) . '.php';
   }
@@ -190,6 +190,7 @@ define('COL_DEFAULT', 2);
 
 $root = ROOT_DIR;
 $prefill = PREFILL_DIR;
+$consent = 'Modify files with these values and create new git repository?';
 
 $modify = 'n';
 do {
@@ -224,7 +225,7 @@ do {
     echo $field[COL_DESCRIPTION] . ": $values[$key]\n";
   }
   echo "\n";
-} while (($modify = strtolower(read_from_console('Modify files with these values? [y/N/q] '))) != 'y');
+} while (($modify = strtolower(read_from_console($consent . ' [y/N/q] '))) != 'y');
 echo "\n";
 
 // update and relocate boilerplate
@@ -236,7 +237,7 @@ foreach ($files as $file) {
 
   // resolve absolute path
   $base = basename($file);
-  $path = $locate[$base] ?? (str_replace([$prefill, $root, $base], '', $file));
+  $path = $locate[$base] ?? str_replace([$prefill, $root, $base], '', $file);
   $file = cleanpath("$root/$path/$base");
 
   // merge json files
@@ -250,27 +251,24 @@ foreach ($files as $file) {
 
   file_put_contents($file, $contents);
 }
-
 // rename files
 foreach ($rename as $file => $renameFile) {
   $file = realpath("$root/$file");
   rename($file, dirname($file) . '/' . $renameFile($values));
 }
-
 // delete files
 foreach ($delete as $file) {
   unlink("$root/$file");
 }
 
 // delete prefill files
-shell_exec('rm ' . __FILE__);
-shell_exec("rm -rf $prefill");
+shell_exec('rm ' . __FILE__ . " && rm -rf $prefill");
 
-// ! refresh git (comment these lines out while testing and debugging)
-// shell_exec("cd $root && rm -rf .git && echo git init") . "\n";
-// echo shell_exec("git init") . "\n";
+// refresh git repo
+//! may be helpful to comment this line out while testing and debugging
+shell_exec("rm -rf $root/.git && git init $root");
 
-echo "All done! Thanks for using Leonidas!\n";
+echo "Done! Thanks for using Leonidas!\n";
 
 ################################################################################
 # Functions
@@ -306,8 +304,9 @@ function encode_format_json(array $json): string
 {
   $flags = JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES;
   $json = json_encode($json, $flags);
-
-  return str_replace('    ', '  ', $json) . "\n";
+  $default = '    ';
+  $preferred = '  ';
+  return str_replace($default, $preferred, $json) . "\n";
 }
 
 function cleanpath(string $path): string

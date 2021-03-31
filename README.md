@@ -7,7 +7,7 @@
 [![Quality Score][ico-code-quality]][link-code-quality]
 [![Total Downloads][ico-downloads]][link-downloads]
 
-## This Project is not yet functional
+## THIS PROJECT IS STILL IN EARLY DEVELOPMENT
 
 ## Install
 

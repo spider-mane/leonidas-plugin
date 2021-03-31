@@ -81,12 +81,12 @@
       "@test"
     ],
     "wpconfig": "cp -n wordpress/wp-config-sample.php wp-config.php",
+    "post-update-cmd": [
+      "@link"
+    ],
     "post-create-project-cmd": [
       "php bin/prefill",
       "@wpconfig"
-    ],
-    "post-update-cmd": [
-      "@link"
     ]
   },
   "extra": {
