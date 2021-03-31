@@ -1,10 +1,13 @@
 {
   "name": "leonidas-plugin",
   "version": "0.1.0",
-  "description": "Starter for Leonidas WordPress plugin",
+  "description": "Starter package for creating a Leonidas based WordPress plugin",
   "author": {
     "name": "Chris Williams",
     "email": "spider.mane.web@gmail.com",
     "url": "https://github.com/spider-mane"
+  },
+  "devDependencies": {
+    "laravel-mix": "^6.0.13"
   }
 }

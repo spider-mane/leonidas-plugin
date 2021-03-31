@@ -1,5 +1,8 @@
 <?php
 
+define('ROOT_DIR', dirname(__DIR__, 1));
+define('PREFILL_DIR', ROOT_DIR . '/.prefill');
+
 // uncomment for debugging
 // ini_set('xdebug.var_display_max_depth', 10);
 // ini_set('xdebug.var_display_max_children', 256);
@@ -9,8 +12,8 @@
 # Config
 ################################################################################
 
-$root = dirname(__DIR__, 1);
-$prefill = $root . '/.prefill';
+$root = ROOT_DIR;
+$prefill = PREFILL_DIR;
 
 $userName = trim(shell_exec('git config user.name'));
 $userEmail = trim(shell_exec('git config user.email'));
@@ -40,13 +43,11 @@ $fields = [
   'plugin_website' => ['Plugin website', '', 'https://github.com/{vendor_github}/{package_name}'],
   'plugin_description' => ['Brief description of plugin', '', $pluginDescription],
 
-  'psr4_namespace' => ['PSR-4 namespace', 'example: Vendor\\Plugin', $psr4Namespace],
+  'psr4_namespace' => ['PSR-4 namespace', 'Vendor\\Plugin', $psr4Namespace],
 ];
 
-$values = [];
-
 $replacements = [
-  // namespace and classes
+  // code
   ':vendor_name\\\\:plugin_name\\\\' => function ($values) {
     return str_replace('\\', '\\\\', $values['psr4_namespace']) . '\\\\';
   },
@@ -62,8 +63,11 @@ $replacements = [
   'PseudoVersion' => function ($values) {
     return str_replace('.', '_', $values['plugin_version']);
   },
+  'PSEUDO_CONSTANT' => function ($values) {
+    return str_replace('-', '_', strtoupper($values['package_name']));
+  },
 
-  // basic info
+  // data
   ':plugin_name' => function ($values) {
     return $values['plugin_name'];
   },
@@ -75,9 +79,6 @@ $replacements = [
   },
   'pseudo-package' => function ($values) {
     return $values['package_name'];
-  },
-  'PSEUDO_CONSTANT' => function ($values) {
-    return str_replace('-', '_', strtoupper($values['package_name']));
   },
   ':plugin_prefix' => function ($values) {
     return $values['plugin_prefix'];
@@ -114,14 +115,8 @@ $replacements = [
   }
 ];
 
-$renames = [
-  'src/Activation/vPseudoVersion.php' => function ($values) use ($replacements) {
-    return 'v' . call_user_func($replacements['PseudoVersion'], $values) . '.php';
-  }
-];
-
 $files = array_merge(
-  // repo boilerplate
+  // misc boilerplate
   glob($prefill . '/*.md'),
   glob($prefill . '/*.xml.dist'),
   glob($prefill . '/composer.json'),
@@ -148,13 +143,13 @@ $files = array_merge(
   // css boilerplate
 );
 
-// files to be relocated to a directory that is not the project root
-$nonStandard = [
+// files whose output target is not in the root directory
+$locate = [
   'package.json' => '/assets'
 ];
 
-// json files whose contents should be merged with boilerplate
-$mergeJson = [
+// json files whose contents should be merged with an existing counterpart
+$mergeJsonData = [
   'composer.json' => function (array $old, array $new): array {
     $composer = array_replace_recursive($old, $new);
     $composer['authors'] = $new['authors'];
@@ -165,7 +160,6 @@ $mergeJson = [
       $composer['scripts']['fill'],
       $composer['scripts']['post-create-project-cmd']
     );
-    sort($composer['keywords']);
 
     return $composer;
   },
@@ -173,6 +167,13 @@ $mergeJson = [
     $package = array_replace_recursive($old, $new);
 
     return $package;
+  }
+];
+
+// files to rename
+$rename = [
+  'src/Activation/vPseudoVersion.php' => function ($values) use ($replacements) {
+    return 'v' . ($replacements['PseudoVersion'])($values) . '.php';
   }
 ];
 
@@ -187,6 +188,9 @@ define('COL_DESCRIPTION', 0);
 define('COL_HELP', 1);
 define('COL_DEFAULT', 2);
 
+$root = ROOT_DIR;
+$prefill = PREFILL_DIR;
+
 $modify = 'n';
 do {
   if ($modify == 'q') {
@@ -196,7 +200,7 @@ do {
   $values = [];
 
   echo "----------------------------------------------------------------------\n";
-  echo "Please, provide the following information:\n";
+  echo "Please provide the following information:\n";
   echo "----------------------------------------------------------------------\n";
   foreach ($fields as $key => $field) {
     $default = isset($field[COL_DEFAULT]) ? interpolate($field[COL_DEFAULT], $values) : '';
@@ -214,7 +218,7 @@ do {
   echo "\n";
 
   echo "----------------------------------------------------------------------\n";
-  echo "Please, check that everything is correct:\n";
+  echo "Please check that everything is correct:\n";
   echo "----------------------------------------------------------------------\n";
   foreach ($fields as $key => $field) {
     echo $field[COL_DESCRIPTION] . ": $values[$key]\n";
@@ -223,7 +227,7 @@ do {
 } while (($modify = strtolower(read_from_console('Modify files with these values? [y/N/q] '))) != 'y');
 echo "\n";
 
-// update boilerplate
+// update and relocate boilerplate
 foreach ($files as $file) {
   $contents = file_get_contents($file);
   foreach ($replacements as $str => $update) {
@@ -232,13 +236,12 @@ foreach ($files as $file) {
 
   // resolve absolute path
   $base = basename($file);
-  $path = $nonStandard[$base] ?? (str_replace([$prefill, $root, $base], '', $file));
-  $file = preg_replace('~/+~', '/', "$root/$path/$base");
+  $path = $locate[$base] ?? (str_replace([$prefill, $root, $base], '', $file));
+  $file = cleanpath("$root/$path/$base");
 
   // merge json files
-  if (isset($mergeJson[$base])) {
-    $merge = $mergeJson[$base];
-    $merged = $merge(
+  if (isset($mergeJsonData[$base])) {
+    $merged = ($mergeJsonData[$base])(
       json_decode(file_get_contents($file), true),
       json_decode($contents, true)
     );
@@ -249,21 +252,23 @@ foreach ($files as $file) {
 }
 
 // rename files
-foreach ($renames as $file => $rename) {
+foreach ($rename as $file => $renameFile) {
   $file = realpath("$root/$file");
-  rename($file, dirname($file) . '/' . $rename($values));
+  rename($file, dirname($file) . '/' . $renameFile($values));
 }
 
 // delete files
-array_map('unlink', $delete);
+foreach ($delete as $file) {
+  unlink("$root/$file");
+}
 
 // delete prefill files
 shell_exec('rm ' . __FILE__);
-shell_exec("rm -rf " . $prefill);
+shell_exec("rm -rf $prefill");
 
-// refresh git
-shell_exec("cd $root && rm -rf .git") . "\n";
-echo shell_exec("git init") . "\n";
+// ! refresh git (comment these lines out while testing and debugging)
+// shell_exec("cd $root && rm -rf .git && echo git init") . "\n";
+// echo shell_exec("git init") . "\n";
 
 echo "All done! Thanks for using Leonidas!\n";
 
@@ -303,4 +308,9 @@ function encode_format_json(array $json): string
   $json = json_encode($json, $flags);
 
   return str_replace('    ', '  ', $json) . "\n";
+}
+
+function cleanpath(string $path): string
+{
+  return preg_replace('~/+~', '/', $path);
 }

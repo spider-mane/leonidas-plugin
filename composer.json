@@ -15,11 +15,7 @@
   ],
   "keywords": [
     "webtheory",
-    "leonidas",
-    "wordpress",
-    "plugin",
-    "starter",
-    "boilerplate"
+    "leonidas"
   ],
   "repositories": [
     {
@@ -64,8 +60,7 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "Tests\\Fixtures\\": "tests/fixtures/",
-      "Tests\\Unit\\": "tests/unit/"
+      "Tests\\": "tests/"
     },
     "files": [
       "boot/development.php"
@@ -80,23 +75,19 @@
     "bench": "vendor/bin/phpbench",
     "play": "vendor/bin/psysh",
     "link": "php bin/symlink-plugin",
-    "wp-config": "cp -n wordpress/wp-config-sample.php wp-config.php",
     "build": [
       "@fix",
       "@check",
       "@test"
     ],
+    "wpconfig": "cp -n wordpress/wp-config-sample.php wp-config.php",
     "post-create-project-cmd": [
       "php bin/prefill",
-      "@wp-config"
+      "@wpconfig"
     ],
     "post-update-cmd": [
       "@link"
     ]
-  },
-  "config": {
-    "sort-packages": true,
-    "process-timeout": 0
   },
   "extra": {
     "coltrane": {
@@ -114,6 +105,10 @@
       ]
     },
     "wordpress-install-dir": "wordpress"
+  },
+  "config": {
+    "sort-packages": true,
+    "process-timeout": 0
   },
   "minimum-stability": "dev",
   "prefer-stable": true
