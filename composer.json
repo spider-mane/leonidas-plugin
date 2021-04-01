@@ -42,6 +42,7 @@
     "friendsofphp/php-cs-fixer": "^2.15",
     "humbug/php-scoper": "^0.14.0",
     "lucatume/wp-browser": "3.0.5.1",
+    "mockery/mockery": "^1.4",
     "monolog/monolog": "^1.24",
     "phpbench/phpbench": "@dev",
     "phpunit/phpunit": "^9.5",
@@ -73,16 +74,17 @@
     "fix": "vendor/bin/phpcbf",
     "bench": "vendor/bin/phpbench",
     "play": "vendor/bin/psysh",
-    "link": "php bin/symlink-plugin",
     "build": [
       "@fix",
       "@check",
       "@test"
     ],
+    "link": "php bin/symlink-plugin",
     "wpconfig": "cp -n wordpress/wp-config-sample.php wp-config.php",
     "post-create-project-cmd": [
       "@wpconfig",
-      "bin/composer-prefill"
+      "@link",
+      "php bin/composer-prefill"
     ]
   },
   "extra": {

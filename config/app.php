@@ -3,9 +3,10 @@
 use WebTheory\Config\ConfigReflector;
 
 return [
-
     /**
-     * * Modules
+     ***************************************************************************
+     * Modules
+     ***************************************************************************
      *
      * Modules are the classes that hook into WordPress and initiate desired
      * functionality for the specific events. Because all modules are passed
@@ -18,7 +19,9 @@ return [
     ],
 
     /**
-     * * Services
+     ***************************************************************************
+     * Services
+     ***************************************************************************
      *
      * Services are pre-configured objects made available throughout your
      * application via a dependency injection container. You can define
@@ -28,7 +31,6 @@ return [
      * StaticProviderInterface, which is a simple static, library-independent
      * service provider which contains the actual instantiation logic as well as
      * a ConfigReflectorInterface instance which allows for providing the a set
-     * of simple arguments that may exist in the same config repository, but
      * more appropriately defined elsewhere. Besides "id", "provider", and
      * "args", the exact key=>value structure will depend on your container
      * library of choice.
@@ -46,7 +48,9 @@ return [
     ],
 
     /**
-     * * Providers
+     ***************************************************************************
+     * Providers
+     ***************************************************************************
      *
      * Some DI containers support "service providers." These are typically self
      * contained classes with all the logic required for inserting an entry into
@@ -57,7 +61,9 @@ return [
     'providers' => [],
 
     /**
-     * * Bootstrap
+     ***************************************************************************
+     * Bootstrap
+     ***************************************************************************
      *
      * Bootstrap assistants are classes you can use to encapsulate your
      * bootstrap requirements. Useful for keeping your Launcher class
