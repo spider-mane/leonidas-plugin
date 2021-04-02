@@ -1,0 +1,40 @@
+#!/usr/bin/env php
+<?php
+
+$root = dirname(__DIR__, 1);
+$testDir = $root . '/build/prefill';
+$prefill = $testDir . '/bin/prefill';
+
+$exclude = [
+  '.',
+  '..',
+  'build',
+  'vendor',
+  'wordpress',
+  '.idea',
+  '.vscode',
+];
+
+$files = array_filter(scandir($root), function ($file) use ($exclude) {
+  return !in_array($file, $exclude);
+});
+
+$copy = implode(',', $files);
+
+if (!file_exists($testDir)) {
+  mkdir($testDir);
+}
+
+$commands = [
+  "cp -r {{$copy}} $testDir",
+  "cd $testDir",
+  "php $prefill"
+];
+
+// exit(var_dump([
+//   'root' => $root,
+//   'copy' => $copy,
+//   'command' => implode(' && ', $commands)
+// ]));
+
+shell_exec(implode(' && ', $commands));

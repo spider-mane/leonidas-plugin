@@ -41,7 +41,7 @@ return [
             'id' => Leonidas\Library\Admin\Loaders\AdminNoticeCollectionLoaderInterface::class,
             'provider' => Leonidas\Framework\Providers\AdminNoticeCollectionLoaderProvider::class,
             'args' => ConfigReflector::map([
-                'prefix' => 'plugin.prefix.extended'
+                'prefix' => 'plugin.prefix'
             ]),
             'shared' => true,
             'tags' => ['admin_notice_loader']

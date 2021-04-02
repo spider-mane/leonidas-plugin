@@ -36,10 +36,10 @@ return [
      * Slug (Textdomain)
      *==========================================================================
      *
-     * This should ideally be identical to your plugin package name. A slug is
-     * essentially a human-readable identifier and the key way that your plugin
-     * will be identified and referenced within WordPress. By WordPress
-     * convention, this shall also be your plugin textdomain.
+     * The plugin slug should ideally be identical to your plugin package name.
+     * A slug is essentially a human-readable identifier and the primary way
+     * that your plugin will be identified and referenced within WordPress. By
+     * WordPress standards, this must also be your plugin textdomain.
      *
      * @link https://developer.wordpress.org/plugins/internationalization/how-to-internationalize-your-plugin/#text-domains
      */
