@@ -18,8 +18,8 @@ $prefill = PREFILL_DIRECTORY;
 
 $userName = trim(shell_exec('git config user.name'));
 $userEmail = trim(shell_exec('git config user.email'));
-$packageName = strtolower(basename($root));
-$pluginName = ucwords(str_replace(['-', '_'], ' ', $packageName));
+$pluginSlug = strtolower(str_replace([' ', '_'], '-', basename($root)));
+$pluginName = ucwords(str_replace(['-', '_'], ' ', basename($root)));
 
 // populate for faster testing
 $authorGithub = '';
@@ -38,10 +38,10 @@ $fields = [
   'vendor_website' => ['Vendor website', '', 'https://github.com/{vendor_name}'],
 
   'plugin_name' => ['Plugin name', '', $pluginName],
-  'package_name' => ['Package name', 'Package or repository name of plugin', $packageName],
+  'plugin_slug' => ['Plugin slug (textdomain)', '', $pluginSlug],
   'plugin_prefix' => ['Plugin prefix', 'Abbreviated shorthand ideally 3-5 characters', $pluginPrefix],
   'plugin_version' => ['Plugin version', '', '0.1.0'],
-  'plugin_website' => ['Plugin website', '', 'https://github.com/{vendor_github}/{package_name}'],
+  'plugin_website' => ['Plugin website', '', 'https://github.com/{vendor_github}/{plugin_slug}'],
   'plugin_description' => ['Brief description of plugin', '', $pluginDescription],
 
   'psr4_namespace' => ['PSR-4 namespace', 'Vendor\\Plugin', $psr4Namespace],
@@ -65,7 +65,7 @@ $replacements = [
     return str_replace('.', '_', $values['plugin_version']);
   },
   'PSEUDO_CONSTANT' => function ($values) {
-    return str_replace('-', '_', strtoupper($values['package_name']));
+    return str_replace('-', '_', strtoupper($values['plugin_slug']));
   },
 
   // data
@@ -75,11 +75,11 @@ $replacements = [
   'Pseudo Plugin' => function ($values) {
     return $values['plugin_name'];
   },
-  ':package_name' => function ($values) {
-    return $values['package_name'];
+  ':plugin_slug' => function ($values) {
+    return $values['plugin_slug'];
   },
   'pseudo-package' => function ($values) {
-    return $values['package_name'];
+    return $values['plugin_slug'];
   },
   ':plugin_prefix' => function ($values) {
     return $values['plugin_prefix'];

@@ -8,7 +8,7 @@ return [
 
     'prefix' => ':plugin_prefix',
 
-    'slug' => ':package_name',
+    'slug' => ':plugin_slug',
 
     'description' => ':plugin_description',
 

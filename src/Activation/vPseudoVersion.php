@@ -26,4 +26,9 @@ final class vPseudoVersion implements PluginActivatorInterface
     {
         //
     }
+
+    public function uninstall(): void
+    {
+        //
+    }
 }

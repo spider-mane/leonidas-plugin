@@ -7,12 +7,17 @@ use Leonidas\Framework\Modules\AbstractPluginSetupModule;
 
 final class Setup extends AbstractPluginSetupModule implements ModuleInterface
 {
-    protected function doActivatePluginAction(bool $networkWide): void
+    protected function activate(bool $networkWide): void
     {
         //
     }
 
-    protected function doDeactivatePluginAction(bool $networkDeactivating): void
+    protected function deactivate(bool $networkDeactivating): void
+    {
+        //
+    }
+
+    public static function uninstall(): void
     {
         //
     }

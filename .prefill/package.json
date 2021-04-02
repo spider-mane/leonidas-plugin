@@ -1,5 +1,5 @@
 {
-  "name": ":package_name",
+  "name": ":plugin_slug",
   "version": ":plugin_version",
   "description": ":plugin_description",
   "author": {

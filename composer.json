@@ -80,7 +80,7 @@
       "@test"
     ],
     "link": "php bin/symlink-plugin",
-    "wpconfig": "cp -n wordpress/wp-config-sample.php wp-config.php",
+    "wpconfig": "cp -n wp-config-sample.php wp-config.php",
     "post-create-project-cmd": [
       "@wpconfig",
       "@link",
