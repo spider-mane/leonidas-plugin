@@ -1,0 +1,66 @@
+#!/usr/bin/env php
+<?php
+
+################################################################################
+# Config
+################################################################################
+$root = dirname(__DIR__, 1);
+$testDir = $root . '/build/prefill';
+$prefill = $testDir . '/bin/prefill';
+
+$exclude = [
+  'build',
+  'vendor',
+  'wordpress',
+  '.idea',
+  '.vscode',
+];
+
+$answers = [
+  'author_name' => 'Method Man',
+  'author_email' => 'methodman@wutangfinancial.wu',
+  'author_github_username' => 'method-man-420',
+  'author_website' => 'https://github.com/method-man-420',
+
+  'vendor_name' => 'method-man',
+  'vendor_github' => 'method-man-420',
+  'vendor_website' => 'https://github.com/method-man-420',
+
+  'plugin_name' => 'Tical',
+  'plugin_slug' => 'tical',
+  'plugin_prefix' => 'tcl',
+  'plugin_version' => '4.2.0',
+  'plugin_website' => 'https://github.com/method-man-420/tical',
+  'plugin_description' => "Here comes the ruckus, the motherf*cking ruckus. Thousands of cut-throats and crumb-snatching f*ckers Straight from the brain, I'll be giving you the pain, anger Coming from the 36th Chamber, bang! Tical, hitting with the Buddha-Fist style. Shotgun slamming in your chestpiece, plow! Frame is blown all over the terrain. Like a man without no arms you can't hang. Time for a change of the guard. You've been arrested for lyric fraud now you barred. For real, check it, I pull strings like B.B. King on guitar I'm the true Fist of the North Star!",
+
+  'psr4_namespace' => "MethodMan\\Tical",
+];
+
+################################################################################
+# Run
+################################################################################
+$testDir = str_replace('/', DIRECTORY_SEPARATOR, $testDir);
+$prefill = str_replace('/', DIRECTORY_SEPARATOR, $prefill);
+$files = array_filter(scandir($root), function ($file) use ($exclude) {
+  $sym = ['.', '..'];
+  return !in_array($file, array_merge($sym, $exclude));
+});
+
+$copy = implode(',', $files);
+$answers = implode(' ', $answers);
+
+$commands = [
+  "rm -rf $testDir",
+  "mkdir $testDir",
+  "cp -r {{$copy}} $testDir",
+  "cd $testDir",
+  "$answers y | php $prefill",
+];
+
+// exit(var_dump([
+//   'root' => $root,
+//   'copy' => $copy,
+//   'command' => implode(' && ', $commands)
+// ]));
+
+echo shell_exec(implode(' && ', $commands));
