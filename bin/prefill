@@ -16,20 +16,20 @@ define('PREFILL_DIRECTORY', ROOT_DIRECTORY . '/.prefill');
 $root = ROOT_DIRECTORY;
 $prefill = PREFILL_DIRECTORY;
 
-$userName = trim(shell_exec('git config user.name'));
-$userEmail = trim(shell_exec('git config user.email'));
-$pluginSlug = strtolower(str_replace([' ', '_'], '-', basename($root)));
-$pluginName = ucwords(str_replace(['-', '_'], ' ', basename($root)));
+$authorName = $authorName ?? trim(shell_exec('git config user.name'));
+$authorEmail = $authorEmail ?? trim(shell_exec('git config user.email'));
+$pluginSlug = $pluginSlug ?? strtolower(str_replace([' ', '_'], '-', basename($root)));
+$pluginName = $pluginName ?? ucwords(str_replace(['-', '_'], ' ', basename($root)));
 
 // populate for faster testing
-$authorGithub = '';
-$pluginPrefix = '';
-$pluginDescription = '';
-$psr4Namespace = '';
+$authorGithub = $authorGithub ?? '';
+$pluginPrefix = $pluginPrefix ?? '';
+$pluginDescription = $pluginDescription ?? '';
+$psr4Namespace = $psr4Namespace ?? '';
 
 $fields = [
-  'author_name' => ['Your name', '', $userName],
-  'author_email' => ['Your email address', '', $userEmail],
+  'author_name' => ['Your name', '', $authorName],
+  'author_email' => ['Your email address', '', $authorEmail],
   'author_github_username' => ['Your Github username', '<username> in https://github.com/username', $authorGithub],
   'author_website' => ['Your website', '', 'https://github.com/{author_github_username}'],
 
