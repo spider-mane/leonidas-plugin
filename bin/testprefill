@@ -1,26 +1,6 @@
 #!/usr/bin/env php
 <?php
 
-// $options = [
-//   'author_name:',
-//   'author_email:',
-//   'author_github_username:',
-//   'author_website:',
-
-//   'vendor_name:',
-//   'vendor_github:',
-//   'vendor_website:',
-
-//   'plugin_name:',
-//   'plugin_slug:',
-//   'plugin_prefix:',
-//   'plugin_version:',
-//   'plugin_website:',
-//   'plugin_description:',
-
-//   'psr4_namespace:',
-// ];
-
 ################################################################################
 # Config
 ################################################################################
@@ -37,29 +17,10 @@ $exclude = [
   '.vscode',
 ];
 
-// $answers = [
-//   'author_name' => 'Method Man',
-//   'author_email' => 'methodman@wutangfinancial.wu',
-//   'author_github_username' => 'method-man-420',
-//   'author_website' => 'https://github.com/method-man-420',
-
-//   'vendor_name' => 'method-man',
-//   'vendor_github' => 'method-man-420',
-//   'vendor_website' => 'https://github.com/method-man-420',
-
-//   'plugin_name' => 'Tical',
-//   'plugin_slug' => 'tical',
-//   'plugin_prefix' => 'tcl',
-//   'plugin_version' => '4.2.0',
-//   'plugin_website' => 'https://github.com/method-man-420/tical',
-//   'plugin_description' => "Here comes the ruckus, the motherf*cking ruckus. Thousands of cut-throats and crumb-snatching f*ckers Straight from the brain, I'll be giving you the pain, anger Coming from the 36th Chamber, bang! Tical, hitting with the Buddha-Fist style. Shotgun slamming in your chestpiece, plow! Frame is blown all over the terrain. Like a man without no arms you can't hang. Time for a change of the guard. You've been arrested for lyric fraud now you barred. For real, check it, I pull strings like B.B. King on guitar I'm the true Fist of the North Star!",
-
-//   'psr4_namespace' => "MethodMan\\Tical",
-// ];
-
 $answers = [
   'authorName' => 'Method Man',
   'authorEmail' => 'methodman@wutangfinancial.wu',
+  'authorGithub' => 'fake-method-man-420',
 
   'pluginName' => 'Tical',
   'pluginSlug' => 'tical',
@@ -91,16 +52,61 @@ $commands = [
   "cd $testDir",
 ];
 
-echo shell_exec(implode(' && ', $commands));
-
+shell_exec(implode(' && ', $commands));
 test_prefill($prefill, $answers);
 
 
 function test_prefill(string $test, array $defaults)
 {
+  $gjpgafgapfesahfpfkafgjalkasfkafdkafak = $test;
+  unset($test);
+
   extract($defaults);
   unset($defaults);
-  $gjpgafgapfesahfpfka = $test;
-  unset($test);
-  require $gjpgafgapfesahfpfka;
+
+  require $gjpgafgapfesahfpfkafgjalkasfkafdkafak;
 }
+
+################################################################################
+# Meh
+################################################################################
+
+// $options = [
+//   'author_name:',
+//   'author_email:',
+//   'author_github_username:',
+//   'author_website:',
+
+//   'vendor_name:',
+//   'vendor_github:',
+//   'vendor_website:',
+
+//   'plugin_name:',
+//   'plugin_slug:',
+//   'plugin_prefix:',
+//   'plugin_version:',
+//   'plugin_website:',
+//   'plugin_description:',
+
+//   'psr4_namespace:',
+// ];
+
+// $answers = [
+//   'author_name' => 'Method Man',
+//   'author_email' => 'methodman@wutangfinancial.wu',
+//   'author_github_username' => 'method-man-420',
+//   'author_website' => 'https://github.com/method-man-420',
+
+//   'vendor_name' => 'method-man',
+//   'vendor_github' => 'method-man-420',
+//   'vendor_website' => 'https://github.com/method-man-420',
+
+//   'plugin_name' => 'Tical',
+//   'plugin_slug' => 'tical',
+//   'plugin_prefix' => 'tcl',
+//   'plugin_version' => '4.2.0',
+//   'plugin_website' => 'https://github.com/method-man-420/tical',
+//   'plugin_description' => "Here comes the ruckus, the motherf*cking ruckus. Thousands of cut-throats and crumb-snatching f*ckers Straight from the brain, I'll be giving you the pain, anger Coming from the 36th Chamber, bang! Tical, hitting with the Buddha-Fist style. Shotgun slamming in your chestpiece, plow! Frame is blown all over the terrain. Like a man without no arms you can't hang. Time for a change of the guard. You've been arrested for lyric fraud now you barred. For real, check it, I pull strings like B.B. King on guitar I'm the true Fist of the North Star!",
+
+//   'psr4_namespace' => "MethodMan\\Tical",
+// ];
