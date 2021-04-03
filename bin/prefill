@@ -1,11 +1,6 @@
 #!/usr/bin/env php
 <?php
 
-//? uncomment for debugging
-// ini_set('xdebug.var_display_max_depth', 10);
-// ini_set('xdebug.var_display_max_children', 256);
-// ini_set('xdebug.var_display_max_data', 1024);
-
 define('ROOT_DIRECTORY', dirname(__DIR__, 1));
 define('PREFILL_DIRECTORY', ROOT_DIRECTORY . '/.prefill');
 
@@ -16,7 +11,7 @@ define('PREFILL_DIRECTORY', ROOT_DIRECTORY . '/.prefill');
 $root = ROOT_DIRECTORY;
 $prefill = PREFILL_DIRECTORY;
 
-// allowing defaults to be passed to script for testing
+// allow defaults to be passed to script for testing
 $authorName = $authorName ?? trim(shell_exec('git config user.name'));
 $authorEmail = $authorEmail ?? trim(shell_exec('git config user.email'));
 $pluginSlug = $pluginSlug ?? strtolower(str_replace([' ', '_'], '-', basename($root)));
@@ -150,6 +145,14 @@ $locate = [
   'package.json' => '/assets'
 ];
 
+// files where user input needs to be further refined
+$filter = [
+  $root . '/config/plugin.php' => function ($values) {
+    $values['plugin_description'] = addslashes($values['plugin_description']);
+    return $values;
+  }
+];
+
 // json files whose contents should be merged with a functional counterpart
 $mergeJsonData = [
   'composer.json' => function (array $old, array $new): array {
@@ -176,12 +179,19 @@ $rename = [
   },
   'src/Activation/vPseudoVersion.php' => function ($values) use ($replacements) {
     return 'v' . ($replacements['PseudoVersion'])($values) . '.php';
-  }
+  },
+  '.gitattributes.sample' => function () {
+    return '.gitattributes';
+  },
+  'assets/.gitattributes.sample' => function () {
+    return '.gitattributes';
+  },
 ];
 
 // files to delete
 $delete = [
-  '/bin/testprefill'
+  '/bin/testprefill',
+  '/bin/composer-prefill',
 ];
 
 ################################################################################
@@ -235,8 +245,9 @@ echo "\n";
 // update and relocate boilerplate
 foreach ($files as $file) {
   $contents = file_get_contents($file);
+  $filtered = isset($filter[$file]) ? ($filter[$file])($values) : $values;
   foreach ($replacements as $str => $update) {
-    $contents = str_replace($str, $update($values), $contents);
+    $contents = str_replace($str, $update($filtered), $contents);
   }
 
   // resolve absolute path
@@ -269,9 +280,7 @@ foreach ($delete as $file) {
 shell_exec('rm ' . __FILE__ . " && rm -rf $prefill");
 
 // refresh git repository
-//! may be helpful to comment this line out while testing and debugging
-//! definitely make sure you commit and push changes beforehand because, yeah.
-shell_exec("rm -rf $root/.git && git init $root");
+shell_exec("rm -rf -f $root/.git && git init $root");
 
 // refresh composer autoload
 shell_exec("composer dump-autoload -d $root");

@@ -1,12 +1,15 @@
 #!/usr/bin/env php
 <?php
 
+ini_set('xdebug.var_display_max_depth', 10);
+ini_set('xdebug.var_display_max_children', 256);
+ini_set('xdebug.var_display_max_data', 1024);
+
 ################################################################################
 # Config
 ################################################################################
-
 $root = dirname(__DIR__, 1);
-$testDir = $root . '/build/prefill';
+$testDir = $root . '/build/testprefill';
 $prefill = $testDir . '/bin/prefill';
 
 $exclude = [
@@ -38,10 +41,9 @@ $answers = [
 $testDir = str_replace('/', DIRECTORY_SEPARATOR, $testDir);
 $prefill = str_replace('/', DIRECTORY_SEPARATOR, $prefill);
 $files = array_filter(scandir($root), function ($file) use ($exclude) {
-  $sym = ['.', '..'];
-  return !in_array($file, array_merge($sym, $exclude));
+  $nav = ['.', '..'];
+  return !in_array($file, array_merge($nav, $exclude));
 });
-
 $copy = implode(' ', $files);
 
 $commands = [
@@ -61,14 +63,15 @@ function test_prefill(string $test, array $defaults)
   $gjpgafgapfesahfpfkafgjalkasfkafdkafak = $test;
   unset($test);
 
-  extract($defaults);
+  $jhapadapfhdspahfdpfdaphdspadfpahdpnaf = $defaults;
   unset($defaults);
 
+  extract($jhapadapfhdspahfdpfdaphdspadfpahdpnaf);
   require $gjpgafgapfesahfpfkafgjalkasfkafdkafak;
 }
 
 ################################################################################
-# Meh
+# One day this will be fully automated
 ################################################################################
 
 // $options = [

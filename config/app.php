@@ -16,7 +16,7 @@ return [
      * reusable between projects.
      */
     'modules' => [
-        PseudoVendor\PseudoPlugin\Setup::class
+        PseudoVendor\PseudoPlugin\Modules\Setup::class
     ],
 
     /**
