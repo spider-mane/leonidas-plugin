@@ -1,5 +1,7 @@
 <?php
 
+$plugin = get_plugin_data(dirname(__DIR__, 1) . '/plugin.php');
+
 return [
 
     /**
@@ -9,7 +11,7 @@ return [
      *
      * The name of your plugin, stylized to your liking.
      */
-    'name' => ':plugin_name',
+    'name' => $plugin['PluginName'],
 
     /**
      *==========================================================================
@@ -18,7 +20,21 @@ return [
      *
      * Current version of your plugin.
      */
-    'version' => ':plugin_version',
+    'version' => $plugin['Version'],
+
+    /**
+     *==========================================================================
+     * Slug (Textdomain)
+     *==========================================================================
+     *
+     * The plugin slug should ideally be identical to your plugin package name.
+     * A slug is essentially a human-readable identifier and it is one way that
+     * your plugin will be identified and referenced within WordPress including
+     * but not limited to resolving the textdomain.
+     *
+     * @link https://developer.wordpress.org/plugins/internationalization/how-to-internationalize-your-plugin/#text-domains
+     */
+    'slug' => $plugin['TextDomain'],
 
     /**
      *==========================================================================
@@ -30,20 +46,6 @@ return [
      * element ids, input names, etc.
      */
     'prefix' => ':plugin_prefix',
-
-    /**
-     *==========================================================================
-     * Slug (Textdomain)
-     *==========================================================================
-     *
-     * The plugin slug should ideally be identical to your plugin package name.
-     * A slug is essentially a human-readable identifier and the primary way
-     * that your plugin will be identified and referenced within WordPress. By
-     * WordPress standards, this must also be your plugin textdomain.
-     *
-     * @link https://developer.wordpress.org/plugins/internationalization/how-to-internationalize-your-plugin/#text-domains
-     */
-    'slug' => ':plugin_slug',
 
     /**
      *==========================================================================
@@ -82,7 +84,7 @@ return [
      * Development
      *==========================================================================
      *
-     * A simple expression, ideally a single function call or tertiary statement
+     * A simple expression such as a single function call or tertiary statement
      * that should return true if the plugin is in a development environment.
      */
     'dev' => defined('PSEUDO_CONSTANT_DEVELOPMENT'),

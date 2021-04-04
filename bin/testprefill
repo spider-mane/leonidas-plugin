@@ -9,7 +9,7 @@ ini_set('xdebug.var_display_max_data', 1024);
 # Config
 ################################################################################
 $root = dirname(__DIR__, 1);
-$testDir = $root . '/build/testprefill';
+$testDir = $root . '/build/test-prefill';
 $prefill = $testDir . '/bin/prefill';
 
 $exclude = [
