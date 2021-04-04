@@ -4,16 +4,17 @@
 $prompt = 'prefill';
 $file = "bin/$prompt";
 
-if (PHP_OS === 'WINNT') {
-  $os = 'Windows';
-  $message = "Composer cannot run interactive scripts on $os. Run $prompt manually by typing 'php $file' in the command line from your project root.\n";
+$incompatible = [
+  'WINNT' => 'Windows'
+];
+
+if (isset($incompatible[PHP_OS])) {
+  $os = $incompatible[PHP_OS];
+  echo "Composer cannot run third party interactive scripts on $os. Run $prompt manually by typing 'php $file' in the command line from your project root.\n";
+  exit;
 }
 
-if (isset($message)) {
-  echo $message;
-} else {
-  __composer_prefill_run_prefill();
-}
+__composer_prefill_run_prefill();
 
 function __composer_prefill_run_prefill()
 {

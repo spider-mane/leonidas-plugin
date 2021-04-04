@@ -190,7 +190,6 @@ $rename = [
 
 // files to delete
 $delete = [
-  '/bin/testprefill',
   '/bin/composer-prefill',
 ];
 
