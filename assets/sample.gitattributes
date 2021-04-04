@@ -6,7 +6,6 @@
 /.babelrc                export-ignore
 /.browserslistrc         export-ignore
 /.editorconfig           export-ignore
-/build                   export-ignore
 /src                     export-ignore
 /tests                   export-ignore
 /webpack.config.js       export-ignore
