@@ -1,6 +1,5 @@
 {
   "name": "leonidas/leonidas-plugin",
-  "version": "0.1.0",
   "type": "project",
   "description": "Starter package for creating a Leonidas based WordPress plugin",
   "homepage": "https://github.com/spider-mane/leonidas-plugin",

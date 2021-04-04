@@ -180,17 +180,21 @@ $rename = [
   'src/Activation/vPseudoVersion.php' => function ($values) use ($replacements) {
     return 'v' . ($replacements['PseudoVersion'])($values) . '.php';
   },
-  '.gitattributes.sample' => function () {
+  'sample.gitattributes' => function () {
     return '.gitattributes';
   },
-  'assets/.gitattributes.sample' => function () {
+  'assets/sample.gitattributes' => function () {
     return '.gitattributes';
   },
 ];
 
 // files to delete
 $delete = [
-  '/bin/composer-prefill',
+  'bin/composer-prefill',
+  'bin/testprefill',
+  'bin/testproject',
+  'bin/.gitattributes',
+  '.gitattributes',
 ];
 
 ################################################################################
@@ -272,7 +276,7 @@ foreach ($rename as $file => $renameFile) {
 }
 // delete files
 foreach ($delete as $file) {
-  unlink("$root/$file");
+  shell_exec("rm -f $root/$file");
 }
 
 // delete prefill files

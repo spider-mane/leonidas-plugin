@@ -6,4 +6,9 @@ $project = 'leonidas/leonidas-plugin';
 $root = dirname(__DIR__, 1);
 $testDir = "$root/build/test-project";
 
-shell_exec("composer create-project $project $testDir");
+$commands = [
+  "rm -rf -f $testDir",
+  "composer create-project $project $testDir --no-scripts"
+];
+
+shell_exec(implode(" && ", $commands));

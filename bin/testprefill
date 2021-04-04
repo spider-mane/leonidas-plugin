@@ -55,10 +55,10 @@ $commands = [
 ];
 
 shell_exec(implode(' && ', $commands));
-test_prefill($prefill, $answers);
+__test_prefill($prefill, $answers);
 
 
-function test_prefill(string $test, array $defaults)
+function __test_prefill(string $test, array $defaults)
 {
   $gjpgafgapfesahfpfkafgjalkasfkafdkafak = $test;
   unset($test);

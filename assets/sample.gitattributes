@@ -2,6 +2,7 @@
 # https://www.kernel.org/pub/software/scm/git/docs/gitattributes.html
 
 # Ignore asset src and build files.
+/.gitattributes
 /.babelrc                export-ignore
 /.browserslistrc         export-ignore
 /.editorconfig           export-ignore
