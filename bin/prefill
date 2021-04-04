@@ -244,6 +244,10 @@ do {
 } while (($modify = strtolower(read_from_console($consent . ' [y/N/q] '))) != 'y');
 echo "\n";
 
+// delete files
+foreach ($delete as $file) {
+  shell_exec("rm -f $root/$file");
+}
 // update and relocate boilerplate
 foreach ($files as $file) {
   $contents = file_get_contents($file);
@@ -267,10 +271,6 @@ foreach ($files as $file) {
   }
 
   file_put_contents($file, $contents);
-}
-// delete files
-foreach ($delete as $file) {
-  shell_exec("rm -f $root/$file");
 }
 // rename files
 foreach ($rename as $file => $renameFile) {
