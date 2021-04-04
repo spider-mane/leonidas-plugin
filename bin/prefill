@@ -194,7 +194,6 @@ $delete = [
   'bin/testprefill',
   'bin/testproject',
   'bin/.gitattributes',
-  '.gitattributes',
 ];
 
 ################################################################################
@@ -269,14 +268,14 @@ foreach ($files as $file) {
 
   file_put_contents($file, $contents);
 }
+// delete files
+foreach ($delete as $file) {
+  shell_exec("rm -f $root/$file");
+}
 // rename files
 foreach ($rename as $file => $renameFile) {
   $file = realpath("$root/$file");
   rename($file, dirname($file) . '/' . $renameFile($values));
-}
-// delete files
-foreach ($delete as $file) {
-  shell_exec("rm -f $root/$file");
 }
 
 // delete prefill files
