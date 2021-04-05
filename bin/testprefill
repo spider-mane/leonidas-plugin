@@ -46,18 +46,12 @@ $files = array_filter(scandir($root), function ($file) use ($exclude) {
 });
 $copy = implode(' ', $files);
 
-$commands = [
-  // "chmod -R 777 $testDir",
-  "rm -rf -f $testDir",
-  "mkdir $testDir",
-  "cp -r $copy $testDir",
-  "cd $testDir",
-];
+if (file_exists($testDir)) {
+  shell_exec("chmod -R 777 $testDir && rm -rf -f $testDir");
+}
+shell_exec("mkdir $testDir && cp -r $copy $testDir");
 
-shell_exec(implode(' && ', $commands));
 __test_prefill($prefill, $answers);
-
-
 
 function __test_prefill(string $test, array $defaults)
 {
