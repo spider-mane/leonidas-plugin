@@ -180,10 +180,10 @@ $rename = [
   'src/Activation/vPseudoVersion.php' => function ($values) use ($replacements) {
     return 'v' . ($replacements['PseudoVersion'])($values) . '.php';
   },
-  'sample.gitattributes' => function () {
+  'example.gitattributes' => function () {
     return '.gitattributes';
   },
-  'assets/sample.gitattributes' => function () {
+  'assets/example.gitattributes' => function () {
     return '.gitattributes';
   },
 ];

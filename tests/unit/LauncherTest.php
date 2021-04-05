@@ -1,6 +1,5 @@
 <?php
 
-use Composer\Installers\Plugin;
 use PHPUnit\Framework\TestCase;
 use PseudoVendor\PseudoPlugin\Launcher;
 

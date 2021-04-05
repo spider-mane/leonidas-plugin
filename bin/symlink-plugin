@@ -2,7 +2,6 @@
 <?php
 
 $root = dirname(__DIR__, 1);
-
 $composer = json_decode(file_get_contents($root . '/composer.json'), true);
 
 $paths = [

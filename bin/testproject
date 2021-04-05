@@ -1,10 +1,9 @@
 #!/usr/bin/env php
 <?php
 
-$project = 'leonidas/leonidas-plugin';
-
 $root = dirname(__DIR__, 1);
 $testDir = "$root/build/test-project";
+$project = json_decode(file_get_contents("$root/composer.json"))->name;
 
 $options = getopt('sxi');
 $args = [];
