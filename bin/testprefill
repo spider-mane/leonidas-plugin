@@ -50,12 +50,13 @@ $commands = [
   // "chmod -R 777 $testDir",
   "rm -rf -f $testDir",
   "mkdir $testDir",
-  "cp -r $root/{$copy} $testDir",
+  "cp -r $copy $testDir",
   "cd $testDir",
 ];
 
 shell_exec(implode(' && ', $commands));
 __test_prefill($prefill, $answers);
+
 
 
 function __test_prefill(string $test, array $defaults)

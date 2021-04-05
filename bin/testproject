@@ -6,9 +6,34 @@ $project = 'leonidas/leonidas-plugin';
 $root = dirname(__DIR__, 1);
 $testDir = "$root/build/test-project";
 
+$options = getopt('s:ni', [
+  'stability:',
+  'no-scripts',
+  'no-install',
+]);
+
+$map = [
+  'stability' => 's',
+  'no-scripts' => 'n',
+  'no-install' => 'i'
+];
+
+$args = [];
+
+if ($options) {
+  foreach ($map as $long => $short) {
+    $arg = $options[$long] ?? $options[$short] ?? null;
+    if (isset($arg)) {
+      $args[] = is_bool($arg) ? "--$long" : "--$long $arg";
+    }
+  }
+}
+
+$args = !empty($args) ? implode(' ', $args) : "--stability dev --no-scripts";
+
 $commands = [
   "rm -rf -f $testDir",
-  "composer create-project $project $testDir --no-scripts"
+  "composer create-project $project $testDir $args"
 ];
 
 shell_exec(implode(" && ", $commands));
