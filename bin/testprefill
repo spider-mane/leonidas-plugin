@@ -9,7 +9,7 @@ ini_set('xdebug.var_display_max_data', 1024);
 # Config
 ################################################################################
 $root = dirname(__DIR__, 1);
-$testDir = $root . '/build/test-prefill';
+$testDir = $root . 'build/test-prefill';
 $prefill = $testDir . '/bin/prefill';
 
 $exclude = [
@@ -38,18 +38,20 @@ $answers = [
 ################################################################################
 # Run
 ################################################################################
+// Windows gets fussy when using mkdir with forward slashes
 $testDir = str_replace('/', DIRECTORY_SEPARATOR, $testDir);
-$prefill = str_replace('/', DIRECTORY_SEPARATOR, $prefill);
+
 $files = array_filter(scandir($root), function ($file) use ($exclude) {
   $nav = ['.', '..'];
   return !in_array($file, array_merge($nav, $exclude));
 });
 $copy = implode(' ', $files);
+$mkdir = PHP_OS === 'WINNT' ? 'mkdir' : 'mkdir -p';
 
 if (file_exists($testDir)) {
   shell_exec("chmod -R 777 $testDir && rm -rf -f $testDir");
 }
-shell_exec("mkdir $testDir && cp -r $copy $testDir");
+shell_exec("$mkdir $testDir && cp -r $copy $testDir");
 
 __test_prefill($prefill, $answers);
 
