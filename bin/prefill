@@ -14,7 +14,7 @@ $prefill = PREFILL_DIRECTORY;
 // allow defaults to be passed to script for testing
 $authorName = $authorName ?? trim(shell_exec('git config user.name'));
 $authorEmail = $authorEmail ?? trim(shell_exec('git config user.email'));
-$pluginSlug = $pluginSlug ?? strtolower(str_replace([' ', '_'], '-', basename($root)));
+$pluginSlug = $pluginSlug ?? strtolower(preg_replace('/[^A-Za-z0-9-]+/', '-', basename($root)));;
 $pluginName = $pluginName ?? ucwords(str_replace(['-', '_'], ' ', basename($root)));
 
 $authorGithub = $authorGithub ?? '';
@@ -180,10 +180,10 @@ $rename = [
   'src/Activation/vPseudoVersion.php' => function ($values) use ($replacements) {
     return 'v' . ($replacements['PseudoVersion'])($values) . '.php';
   },
-  'example.gitattributes' => function () {
+  '.example.gitattributes' => function () {
     return '.gitattributes';
   },
-  'assets/example.gitattributes' => function () {
+  'assets/.example.gitattributes' => function () {
     return '.gitattributes';
   },
 ];
@@ -278,8 +278,14 @@ foreach ($rename as $file => $renameFile) {
   rename($file, dirname($file) . '/' . $renameFile($values));
 }
 
-// delete prefill files
+// delete prefill files and add .gitkeep if bin is left empty
 shell_exec('rm ' . __FILE__ . " && rm -rf $prefill");
+$bin = array_filter(scandir("$root/bin"), function ($file) {
+  return !in_array($file, ['.', '..']);
+});
+if (empty($bin)) {
+  touch("$root/bin/.gitkeep");
+}
 
 // refresh git repository
 shell_exec("rm -rf -f $root/.git && git init $root");

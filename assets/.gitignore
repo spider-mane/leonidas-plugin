@@ -1,6 +1,9 @@
-# NPM
+# Development
+/dist/
+/build/
+
+# NPM/ Yarn
 node_modules/
 package-lock.json
-
-# Build files
-/build/
+npm-debug.log
+yarn-error.log
