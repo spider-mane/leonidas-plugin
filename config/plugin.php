@@ -84,7 +84,7 @@ return [
      * Development
      *==========================================================================
      *
-     * A simple expression such as a single function call or tertiary statement
+     * A simple expression such as a single function call or ternary statement
      * that should return true if the plugin is in a development environment.
      */
     'dev' => defined('PSEUDO_CONSTANT_DEVELOPMENT'),

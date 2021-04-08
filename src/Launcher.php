@@ -102,9 +102,7 @@ final class Launcher
 
     private function launchPseudoPlugin(): Launcher
     {
-        if (class_exists(PseudoPlugin::class)) {
-            PseudoPlugin::launch($this->extension);
-        }
+        PseudoPlugin::launch($this->extension);
 
         return $this;
     }

@@ -89,7 +89,7 @@ define('SAVEQUERIES', true);
 
 /** Absolute path to the WordPress directory. */
 if (!defined('ABSPATH')) {
-    define('ABSPATH', __DIR__ . '/');
+    define('ABSPATH', __DIR__ . '/wordpress/');
 }
 
 /** Sets up WordPress vars and included files. */
