@@ -1,7 +1,5 @@
 <?php
 
-$plugin = get_plugin_data(dirname(__DIR__, 1) . '/plugin.php');
-
 return [
 
     /**
@@ -11,7 +9,7 @@ return [
      *
      * The name of your plugin, stylized to your liking.
      */
-    'name' => $plugin['PluginName'],
+    'name' => ':plugin_name',
 
     /**
      *==========================================================================
@@ -20,7 +18,7 @@ return [
      *
      * Current version of your plugin.
      */
-    'version' => $plugin['Version'],
+    'version' => ':plugin_version',
 
     /**
      *==========================================================================
@@ -34,7 +32,7 @@ return [
      *
      * @link https://developer.wordpress.org/plugins/internationalization/how-to-internationalize-your-plugin/#text-domains
      */
-    'slug' => $plugin['TextDomain'],
+    'slug' => ':plugin_slug',
 
     /**
      *==========================================================================
