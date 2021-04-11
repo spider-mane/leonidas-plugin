@@ -5,7 +5,7 @@
  * For the full copyright and license information, please view the LICENSE file
  * that was distributed with this source code.
  *
- * @package :plugin_slug
+ * @package :vendor_name/:plugin_slug
  * @version :plugin_version
  * @license MIT
  * @copyright Copyright (C) :system_year, :plugin_author, All rights reserved.
@@ -32,10 +32,18 @@ use PseudoVendor\PseudoPlugin\Launcher;
 
 defined('ABSPATH') || exit;
 
-require __DIR__ . '/boot/init.php';
+$init = static function () {
+    require __DIR__ . '/boot/init.php';
 
-Launcher::init(
-    Plugin::base(__FILE__),
-    Plugin::path(__FILE__),
-    Plugin::url(__FILE__)
-);
+    Launcher::init(
+        Plugin::base(__FILE__),
+        Plugin::path(__FILE__),
+        Plugin::url(__FILE__)
+    );
+};
+
+if (did_action('leonidas_init')) {
+    $init();
+} else {
+    add_action('leonidas_init', $init);
+}
