@@ -3,7 +3,7 @@
 namespace PseudoVendor\PseudoPlugin;
 
 use Leonidas\Contracts\Extension\WpExtensionInterface;
-use Leonidas\Framework\Exceptions\PluginAlreadyLoadedException;
+use Leonidas\Framework\Exceptions\InvalidCallToPluginMethodException;
 
 final class PseudoPlugin
 {
@@ -43,7 +43,7 @@ final class PseudoPlugin
 
     private static function throwAlreadyLoadedException(callable $method): void
     {
-        throw new PluginAlreadyLoadedException(
+        throw new InvalidCallToPluginMethodException(
             self::$instance->base->getName(),
             $method
         );

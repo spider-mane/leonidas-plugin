@@ -3,8 +3,7 @@
 namespace PseudoVendor\PseudoPlugin;
 
 use Leonidas\Contracts\Extension\WpExtensionInterface;
-use Leonidas\Enum\ExtensionType;
-use Leonidas\Framework\Exceptions\PluginAlreadyLoadedException;
+use Leonidas\Framework\Exceptions\InvalidCallToPluginMethodException;
 use Leonidas\Framework\ModuleInitializer;
 use Leonidas\Framework\WpExtension;
 use Psr\Container\ContainerInterface;
@@ -61,15 +60,17 @@ final class Launcher
 
         return WpExtension::create([
             'name' => $config('plugin.name'),
+            'version' => $config('plugin.version'),
+            'slug' => $config('plugin.slug'),
             'prefix' => $config('plugin.prefix.short'),
             'description' => $config('plugin.description'),
             'base' => $this->base,
             'path' => $this->path,
             'url' => $this->url,
-            'assets' => $config('plugin.assets'),
+            'type' => 'plugin',
+            'container' => $this->container,
             'dev' => $config('plugin.dev'),
-            'type' => new ExtensionType($config('plugin.type')),
-            'container' => $this->container
+            'assets' => $config('plugin.assets'),
         ]);
     }
 
@@ -129,7 +130,7 @@ final class Launcher
 
     private static function throwAlreadyLoadedException(callable $method): void
     {
-        throw new PluginAlreadyLoadedException(
+        throw new InvalidCallToPluginMethodException(
             self::$instance->extension->getName(),
             $method
         );

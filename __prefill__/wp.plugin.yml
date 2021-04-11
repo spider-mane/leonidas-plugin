@@ -1,8 +1,0 @@
----
-name": :plugin_name
-version": :plugin_version
-description": :plugin_description
-textdomain": :plugin_textdomain
-website: :plugin_website
-author: :plugin_author
-author_email: :author_email

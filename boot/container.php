@@ -2,7 +2,7 @@
 
 use League\Container\Container;
 use Leonidas\Contracts\Container\StaticProviderInterface;
-use WebTheory\GuctilityBelt\Config;
+use Leonidas\Library\Core\Config\Config;
 
 defined('ABSPATH') || exit;
 
