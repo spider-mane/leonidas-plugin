@@ -2,7 +2,7 @@
 <?php
 
 define('ROOT_DIRECTORY', dirname(__DIR__, 1));
-define('PREFILL_DIRECTORY', ROOT_DIRECTORY . '/.prefill');
+define('PREFILL_DIRECTORY', ROOT_DIRECTORY . '/__prefill__');
 
 ################################################################################
 # Config
