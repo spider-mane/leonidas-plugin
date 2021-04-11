@@ -3,12 +3,10 @@
 wp-config.php
 
 # Dev and CI
-.phpunit.result.cache
-/dist/
+*.cache
 /build/
+/dist/
 docker-compose.override.yml
-phpcs.xml
-phpunit.xml
 
 # Composer
 /vendor/
@@ -24,10 +22,10 @@ composer.lock
 !example.env
 
 # Editor/ IDE
+*.code-workspace
 .idea/
 .project/
 .vscode/
-*.code-workspace
 
 # System files
 .DS_Store
