@@ -1,6 +1,6 @@
 <?php
 
-use WebTheory\Config\ConfigReflector;
+use Leonidas\Library\Core\Config\ConfigReflector;
 
 return [
 
@@ -16,7 +16,8 @@ return [
      * reusable between projects.
      */
     'modules' => [
-        PseudoVendor\PseudoPlugin\Modules\Setup::class
+        PseudoVendor\PseudoPlugin\Modules\Setup::class,
+        PseudoVendor\PseudoPlugin\Modules\ProvisionAdminAssets::class,
     ],
 
     /**
