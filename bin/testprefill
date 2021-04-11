@@ -53,16 +53,13 @@ if (file_exists($testDir)) {
 }
 shell_exec("$mkdir $testDir && cp -r $copy $testDir");
 
-__test_prefill($prefill, $answers);
+// Limit exposure! With an immediately invoked closure.
+(function () use ($prefill, $answers) {
+  $__prefill__ = $prefill;
+  $__answers__ = $answers;
 
-function __test_prefill(string $test, array $defaults)
-{
-  $gjpgafgapfesahfpfkafgjalkasfkafdkafak = $test;
-  unset($test);
+  unset($prefill, $answers);
 
-  $jhapadapfhdspahfdpfdaphdspadfpahdpnaf = $defaults;
-  unset($defaults);
-
-  extract($jhapadapfhdspahfdpfdaphdspadfpahdpnaf);
-  require $gjpgafgapfesahfpfkafgjalkasfkafdkafak;
-}
+  extract($__answers__);
+  require $__prefill__;
+})();

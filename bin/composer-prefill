@@ -14,9 +14,7 @@ if (isset($incompatible[PHP_OS])) {
   exit;
 }
 
-__composer_prefill_run_prefill();
-
-function __composer_prefill_run_prefill()
-{
+// limit exposure with an immediately invoked closure
+(function () {
   require __DIR__ . '/prefill';
-}
+})();
