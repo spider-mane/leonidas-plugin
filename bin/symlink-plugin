@@ -15,7 +15,11 @@ $path = isset($paths[$type]) ? $paths[$type] : $paths[$default];
 $wordpress = $composer['extra']['wordpress-install-dir'] ?? 'wordpress';
 $content = "wp-content/$path";
 
-$link = preg_replace('~/+~', '/', "$root/$wordpress/$content/" . basename($root));
+$link = preg_replace(
+  '/\/+/',
+  DIRECTORY_SEPARATOR,
+  "$root/$wordpress/$content/" . basename($root)
+);
 
 shell_exec("rm -f $link");
-symlink($root, $link);
+symlink($root, $link); // running this on windows requires administrator permissions

@@ -336,5 +336,5 @@ function encode_format_json(array $json): string
 
 function cleanpath(string $path): string
 {
-  return preg_replace('~/+~', '/', $path);
+  return preg_replace('/\/+/', DIRECTORY_SEPARATOR, $path);
 }
