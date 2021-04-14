@@ -14,12 +14,13 @@ $prefill = $testDir . '/bin/prefill';
 
 $exclude = array_merge(
   [
-    '.git',
     '.idea',
+    '.project',
     '.vscode',
     'assets/build',
     'assets/dist',
     'assets/node_modules',
+    'assets/package-lock.json',
     'build',
     'composer.lock',
     'vendor',
@@ -47,35 +48,24 @@ $answers = [
 ################################################################################
 # Functions (as closures to avoid potential collisions with prefill script)
 ################################################################################
-$copyContents = static function (string $dir, string $copyDir, array $exclude = []) use (&$copyContents): void {
-  static $root;
-  static $excludedFiles;
-
-  if (!isset($root)) {
-    $root = $dir;
-  }
-
-  if (!isset($excludedFiles)) {
-    $excludedFiles = array_map(function ($file) use ($dir) {
-      return "$dir/$file";
-    }, $exclude);
-  }
-
-  $files = array_filter(scandir($dir), function ($file) {
+$copyContents = function (string $dir, string $copyDir, array $exclude = [], ?string $sub = null) use (&$copyContents): void {
+  $currentDir = $sub ?? $dir;
+  $files = array_filter(scandir($currentDir), function ($file) {
     return !in_array($file, ['.', '..']);
   });
 
   foreach ($files as $file) {
-    $file = "$dir/$file";
-    $copy = $copyDir . '/' . str_replace("$root", '', $file);
+    $file = "$currentDir/$file";
+    $copy = $copyDir . '/' . str_replace("$dir", '', $file);
 
-    if (in_array($file, $excludedFiles)) {
+    if (in_array($file, $exclude)) {
       continue;
     }
 
     if (is_dir($file)) {
       mkdir($copy);
-      $copyContents($file, $copyDir);
+      $copyContents($dir, $copyDir, $exclude, $file);
+
       continue;
     }
 
@@ -86,6 +76,10 @@ $copyContents = static function (string $dir, string $copyDir, array $exclude = 
 ################################################################################
 # Run
 ################################################################################
+$exclude = array_map(function ($file) use ($root) {
+  return "$root/$file";
+}, $exclude);
+
 if (file_exists($testDir)) {
   shell_exec("chmod -R 777 $testDir && rm -rf -f $testDir");
 }

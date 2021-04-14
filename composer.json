@@ -28,6 +28,7 @@
     "guzzlehttp/psr7": "^1.6",
     "hassankhan/config": "^2.1",
     "league/container": "^3.3",
+    "nesbot/carbon": "^2.46",
     "psr/container": "^1.1",
     "voku/stringy": "^6.4",
     "webtheory/guctilitybelt": "^0.2.0",

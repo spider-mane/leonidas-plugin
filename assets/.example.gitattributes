@@ -11,4 +11,4 @@
 /scripts/                export-ignore
 /src/                    export-ignore
 /tests/                  export-ignore
-/webpack.config.js       export-ignore
+/webpack.*.js            export-ignore
