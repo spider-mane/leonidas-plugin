@@ -117,7 +117,7 @@ $files = array_merge(
   glob($prefill . '/*'),
   [
     $root . '/phpcs.xml.dist',
-    $root . '/phpunit.xml.dist',
+    // $root . '/phpunit.xml.dist',
   ],
 
   // php boilerplate
@@ -193,6 +193,7 @@ $delete = [
   'bin/testprefill',
   'bin/testproject',
   'bin/.gitattributes',
+  'prefill',
 ];
 
 ################################################################################

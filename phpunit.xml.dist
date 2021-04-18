@@ -59,6 +59,6 @@
 
   <!-- Environment -->
   <php>
-    <const name="PSEUDO_CONSTANT_DEVELOPMENT" value="true"/>
+    <!--  -->
   </php>
 </phpunit>

@@ -64,7 +64,7 @@ ini_set('xdebug.var_display_max_depth', 10);
  */
 require_once "$root/vendor/autoload.php";
 
-$config = new Config("$root/config");
+$config = new Config("$root/config/development.php");
 
 /**
  * Monolog logging
