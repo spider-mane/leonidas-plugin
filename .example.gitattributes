@@ -19,6 +19,7 @@
 /PULL_REQUEST_TEMPLATE.md       export-ignore
 /assets/src                     export-ignore
 /boot/development.php           export-ignore
+/config/development.php         export-ignore
 # /docs/                           export-ignore
 /phpbench.json*                 export-ignore
 /phpcs.xml*                     export-ignore

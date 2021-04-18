@@ -6,6 +6,7 @@ wp-config.php
 *.cache
 /build/
 /dist/
+/logs/
 docker-compose.override.yml
 
 # Composer

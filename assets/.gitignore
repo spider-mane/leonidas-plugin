@@ -1,6 +1,7 @@
 # Development
 /dist/
 /build/
+/logs/
 
 # NPM/ Yarn
 node_modules/
