@@ -117,6 +117,7 @@ $files = array_merge(
   glob($prefill . '/*'),
   [
     $root . '/phpcs.xml.dist',
+    $root . '/phpunit.xml.dist',
   ],
 
   // php boilerplate

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/8.5/phpunit.xsd"
+<phpunit
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
   backupGlobals="false"
   backupStaticAttributes="false"
   beStrictAboutCoversAnnotation="true"
@@ -17,21 +18,18 @@
   processIsolation="false"
   stopOnFailure="true"
   testdox="true"
-  verbose="true">
-
+  verbose="true"
+>
   <!-- Testsuites -->
   <testsuites>
-    <!-- Unit Testing -->
     <testsuite name="unit">
       <directory>tests/unit</directory>
     </testsuite>
 
-    <!-- Integration Testing -->
     <testsuite name="integration">
       <directory>tests/integration</directory>
     </testsuite>
 
-    <!-- Acceptance Testing -->
     <testsuite name="acceptance">
       <directory>tests/acceptance</directory>
     </testsuite>
@@ -59,4 +57,8 @@
     <text outputFile="build/phpunit/logs/logfile.txt"/>
   </logging>
 
+  <!-- Environment -->
+  <php>
+    <const name="PSEUDO_CONSTANT_DEVELOPMENT" value="true"/>
+  </php>
 </phpunit>
