@@ -74,7 +74,7 @@ $replacements = [
   ':plugin_slug' => function ($values) {
     return $values['plugin_slug'];
   },
-  'pseudo-package' => function ($values) {
+  'pseudo-plugin' => function ($values) {
     return $values['plugin_slug'];
   },
   ':plugin_prefix' => function ($values) {
@@ -114,10 +114,7 @@ $replacements = [
 
 $files = array_merge(
   // misc boilerplate
-  glob($prefill . '/*.md'),
-  glob($prefill . '/*.xml.dist'),
-  glob($prefill . '/composer.json'),
-  glob($prefill . '/package.json'),
+  glob($prefill . '/*'),
   [
     $root . '/phpcs.xml.dist',
   ],
@@ -133,6 +130,7 @@ $files = array_merge(
   glob($root . '/tests/**/**/*.php'),
   [
     $root . '/plugin.php',
+    $root . '/wp-config-sample.php',
   ]
 
   // js boilerplate

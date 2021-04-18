@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<ruleset name="pseudo-package">
+<ruleset name="pseudo-plugin">
   <description>Coding standard for the Pseudo Plugin WordPress plugin</description>
 
   <!-- File paths -->
