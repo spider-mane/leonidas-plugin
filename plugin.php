@@ -45,9 +45,3 @@ $init = static function () {
 add_action('leonidas_init')
     ? $init()
     : add_action('leonidas_init', $init);
-
-// if (did_action('leonidas_init')) {
-//     $init();
-// } else {
-//     add_action('leonidas_init', $init);
-// }
