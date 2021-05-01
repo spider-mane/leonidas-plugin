@@ -83,7 +83,7 @@ $exclude = array_map(function ($file) use ($root) {
 if (file_exists($testDir)) {
   shell_exec("chmod -R 777 $testDir && rm -rf -f $testDir");
 }
-mkdir($testDir);
+mkdir($testDir, 0777, true);
 $copyContents($root, $testDir, $exclude);
 
 // Limit exposure! With an immediately invoked closure.
