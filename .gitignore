@@ -1,12 +1,12 @@
 # Wordpress
 /wordpress/
-wp-config.php
 
 # Dev and CI
 *.cache
 /build/
 /dist/
 /logs/
+cghooks.lock
 docker-compose.override.yml
 
 # Composer
@@ -14,13 +14,10 @@ docker-compose.override.yml
 composer.lock
 
 # Env
-.env
+*.env
 .env.*
 .*.env
-*.env
 !.env.example
-!.example.env
-!example.env
 
 # Editor/ IDE
 *.code-workspace
