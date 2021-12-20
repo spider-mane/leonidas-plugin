@@ -8,14 +8,8 @@ use Psr\Http\Message\ResponseFactoryInterface;
 
 class GuzzleResponseFactoryServiceProvider extends AbstractServiceProvider
 {
-    /**
-     *
-     */
     protected $provides = [ResponseFactoryInterface::class];
 
-    /**
-     *
-     */
     public function register()
     {
         $container = $this->getLeagueContainer();

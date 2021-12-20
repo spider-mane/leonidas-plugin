@@ -9,9 +9,6 @@ class TaxonomyServiceProvider extends AbstractServiceProvider
 {
     protected $provides = [Factory::class];
 
-    /**
-     *
-     */
     public function register()
     {
         $container = $this->getLeagueContainer();

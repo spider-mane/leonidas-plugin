@@ -9,9 +9,6 @@ class WpAdminFieldFactoryServiceProvider extends AbstractServiceProvider
 {
     protected $provides = [Field::class];
 
-    /**
-     *
-     */
     public function register()
     {
         $container = $this->getLeagueContainer();

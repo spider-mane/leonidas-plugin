@@ -10,16 +10,10 @@ use Slim\Routing\RouteCollectorProxy;
 
 class SlimRouterServiceProvider extends AbstractServiceProvider
 {
-    /**
-     *
-     */
     protected $provides = [
         RouteCollectorProxyInterface::class,
     ];
 
-    /**
-     *
-     */
     public function register()
     {
         $container = $this->getLeagueContainer();

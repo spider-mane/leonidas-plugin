@@ -10,9 +10,6 @@ class SwiftMailerServiceProvider extends AbstractServiceProvider
 {
     protected $provides = [Swift_Mailer::class];
 
-    /**
-     *
-     */
     public function register()
     {
         $container = $this->getLeagueContainer();
