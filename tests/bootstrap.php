@@ -1,7 +1,5 @@
 <?php
 
-$root = dirname(__DIR__, 1);
+$root = dirname(__DIR__);
 
-if (file_exists($autoload = $root . '/vendor/autoload.php')) {
-    require $autoload;
-}
+require_once "$root/boot/development/setup.php";
