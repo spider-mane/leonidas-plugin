@@ -1,6 +1,6 @@
 <?php
 
-namespace Leonidas\Framework\App\Providers;
+namespace PseudoVendor\PseudoPlugin\Providers;
 
 use League\Container\ServiceProvider\AbstractServiceProvider;
 use Leonidas\Framework\App\Forms\FormRepository;
@@ -17,7 +17,7 @@ class FormRepositoryServiceProvider extends AbstractServiceProvider
         $container = $this->getLeagueContainer();
 
         $container->share(FormRepository::class, function () use ($container) {
-            return new FormRepository;
+            return new FormRepository();
         });
     }
 }

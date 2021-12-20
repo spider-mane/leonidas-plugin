@@ -1,6 +1,6 @@
 <?php
 
-namespace Leonidas\Framework\App\Providers;
+namespace PseudoVendor\PseudoPlugin\Providers;
 
 use League\Container\ServiceProvider\AbstractServiceProvider;
 use Swift_Mailer;
