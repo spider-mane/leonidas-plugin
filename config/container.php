@@ -1,6 +1,6 @@
 <?php
 
-use Leonidas\Library\Core\Config\ConfigReflector;
+use WebTheory\Config\Deferred\Reflection;
 
 return [
 
@@ -36,7 +36,7 @@ return [
         [
             'id' => Leonidas\Library\Admin\Loaders\AdminNoticeCollectionLoaderInterface::class,
             'provider' => Leonidas\Framework\Providers\AdminNoticeCollectionLoaderProvider::class,
-            'args' => ConfigReflector::map([
+            'args' => Reflection::map([
                 'prefix' => 'plugin.prefix'
             ]),
             'shared' => true,

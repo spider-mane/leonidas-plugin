@@ -31,6 +31,7 @@
     "nesbot/carbon": "^2.46",
     "psr/container": "^1.1",
     "voku/stringy": "^6.4",
+    "webtheory/config": "@stable",
     "webtheory/facade": "@stable",
     "webtheory/html": "@stable",
     "webtheory/saveyour": "@stable"
