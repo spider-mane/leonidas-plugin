@@ -1,6 +1,10 @@
 #!/usr/bin/env php
 <?php
 
+use Faker\Factory;
+
+require_once dirname(__DIR__, 1) . '/vendor/autoload.php';
+
 ini_set('xdebug.var_display_max_depth', 10);
 ini_set('xdebug.var_display_max_children', 256);
 ini_set('xdebug.var_display_max_data', 1024);
@@ -11,6 +15,7 @@ ini_set('xdebug.var_display_max_data', 1024);
 $root = dirname(__DIR__, 1);
 $testDir = $root . '/build/test-prefill';
 $prefill = $testDir . '/bin/prefill';
+$faker = Factory::create();
 
 $exclude = array_merge(
   [
@@ -48,7 +53,12 @@ $answers = [
 ################################################################################
 # Functions (as closures to avoid potential collisions with prefill script)
 ################################################################################
-$copyContents = function (string $dir, string $copyDir, array $exclude = [], ?string $sub = null) use (&$copyContents): void {
+$copyContents = function (
+  string $dir,
+  string $copyDir,
+  array $exclude = [],
+  ?string $sub = null
+) use (&$copyContents): void {
   $currentDir = $sub ?? $dir;
   $files = array_filter(scandir($currentDir), function ($file) {
     return !in_array($file, ['.', '..']);
@@ -83,16 +93,13 @@ $exclude = array_map(function ($file) use ($root) {
 if (file_exists($testDir)) {
   shell_exec("chmod -R 777 $testDir && rm -rf -f $testDir");
 }
+
 mkdir($testDir, 0777, true);
 $copyContents($root, $testDir, $exclude);
 
-// Limit exposure! With an immediately invoked closure.
-(function () use ($prefill, $answers) {
-  $__prefill__ = $prefill;
-  $__answers__ = $answers;
+chdir($testDir);
 
-  unset($prefill, $answers);
-
+(function ($__prefill__, $__answers__) {
   extract($__answers__);
   require $__prefill__;
-})();
+})($prefill, $answers);

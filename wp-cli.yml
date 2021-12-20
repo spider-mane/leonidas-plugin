@@ -12,8 +12,8 @@ core download:
   skip-content: true
 
 core install:
-  url: http://leonidas.test
-  title: Leonidas
+  url: http://:plugin_slug.test
+  title: :plugin_name
   admin_user: admin
   admin_password: password
   admin_email: user@example.com

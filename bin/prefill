@@ -117,7 +117,7 @@ $files = array_merge(
   glob($prefill . '/*'),
   [
     $root . '/phpcs.xml.dist',
-    // $root . '/phpunit.xml.dist',
+    $root . '/wp-cli.yml',
   ],
 
   // php boilerplate
@@ -131,7 +131,6 @@ $files = array_merge(
   glob($root . '/tests/**/**/*.php'),
   [
     $root . '/plugin.php',
-    $root . '/wp-config-sample.php',
   ]
 
   // js boilerplate
