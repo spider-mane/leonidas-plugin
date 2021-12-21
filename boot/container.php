@@ -38,8 +38,5 @@ foreach ($config->get('container.providers', []) as $provider) {
     $container->addServiceProvider(new $provider);
 }
 
-# clean up global scope
-unset($root, $config);
-
 # return bootstrapped container
 return $container;

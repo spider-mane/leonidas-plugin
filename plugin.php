@@ -32,18 +32,18 @@ use PseudoVendor\PseudoPlugin\Launcher;
 
 defined('ABSPATH') || exit;
 
-$init = static function () {
-    require __DIR__ . '/boot/init.php';
+call_user_func(function () {
+    $init = static function () {
+        require __DIR__ . '/boot/init.php';
 
-    Launcher::init(
-        Plugin::base(__FILE__),
-        Plugin::path(__FILE__),
-        Plugin::url(__FILE__)
-    );
-};
+        Launcher::init(
+            Plugin::base(__FILE__),
+            Plugin::path(__FILE__),
+            Plugin::url(__FILE__)
+        );
+    };
 
-did_action('leonidas_loaded')
-    ? $init()
-    : add_action('leonidas_loaded', $init);
-
-unset($init);
+    did_action('leonidas_loaded')
+        ? $init()
+        : add_action('leonidas_loaded', $init);
+});

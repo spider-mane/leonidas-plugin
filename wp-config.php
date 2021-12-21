@@ -9,7 +9,9 @@
 use Env\Env;
 use WebTheory\WpCliUtil\WpCliUtil;
 
-require_once __DIR__ . '/boot/development/runtime.php';
+call_user_func(function () {
+    require_once __DIR__ . '/boot/development/runtime.php';
+});
 
 define('DB_NAME', Env::get('DB_NAME'));
 define('DB_USER', Env::get('DB_USER'));
@@ -19,7 +21,7 @@ define('DB_CHARSET', Env::get('DB_CHARSET') ?? 'utf8');
 define('DB_COLLATE', Env::get('DB_COLLATE') ?? '');
 
 define('WP_HOME', Env::get('WP_HOME'));
-define('WP_SITE_URL', Env::get('WP_SITE_URL'));
+define('WP_SITE_URL', Env::get('WP_SITE_URL') ?? WP_HOME);
 
 define('WP_ALLOW_MULTISITE', false);
 
@@ -27,6 +29,6 @@ if (!defined('ABSPATH')) {
     define('ABSPATH', __DIR__ . '/' . WpCliUtil::getInstallPath() . '/');
 }
 
-$table_prefix = Env::get('DB_TABLE_PREFIX') ?? 'wp_';
+$table_prefix = Env::get('DB_PREFIX') ?? 'wp_';
 
 require_once ABSPATH . 'wp-settings.php';
