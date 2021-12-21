@@ -24,19 +24,17 @@
   ],
   "require": {
     "php": "^7.4",
-    "composer/installers": "^1.10",
+    "giggsey/libphonenumber-for-php": "^8.12",
     "guzzlehttp/psr7": "^1.6",
-    "hassankhan/config": "^2.1",
-    "league/container": "^3.3",
-    "nesbot/carbon": "^2.46",
+    "league/container": "^4.2",
     "psr/container": "^1.1",
-    "voku/stringy": "^6.4",
     "webtheory/config": "@stable",
     "webtheory/facade": "@stable",
     "webtheory/html": "@stable",
     "webtheory/saveyour": "@stable"
   },
   "require-dev": {
+    "composer/installers": "^2.0",
     "fakerphp/faker": "^1.17",
     "filp/whoops": "^2.5",
     "friendsofphp/php-cs-fixer": "^2.15",
@@ -44,6 +42,7 @@
     "maximebf/debugbar": "^1.17",
     "mockery/mockery": "^1.4",
     "monolog/monolog": "^2.0",
+    "nesbot/carbon": "^2.46",
     "nunomaduro/collision": "^5.10",
     "oscarotero/env": "^2.1",
     "phpbench/phpbench": "@dev",
@@ -55,10 +54,11 @@
     "symfony/var-dumper": "^5.4",
     "vimeo/psalm": "^4.7",
     "vlucas/phpdotenv": "^5.3",
+    "voku/stringy": "^6.4",
     "webtheory/exterminate": "@stable",
     "webtheory/wp-cli-util": "@stable",
     "webtheory/wp-test": "@stable",
-    "wp-cli/wp-cli-bundle": "*"
+    "wp-cli/wp-cli-bundle": "@stable"
   },
   "autoload": {
     "psr-4": {
@@ -71,24 +71,38 @@
     }
   },
   "scripts": {
-    "test": "vendor/bin/phpunit",
-    "watch": "vendor/bin/phpunit-watcher",
-    "check": "vendor/bin/phpcs",
-    "fix": "vendor/bin/php-cs-fixer fix --verbose",
-    "analyze": "vendor/bin/psalm",
     "bench": "vendor/bin/phpbench",
-    "play": "vendor/bin/psysh",
+    "check": "vendor/bin/phpcs",
     "collect": "vendor/bin/var-dump-server",
+    "env": "cp -n .env.example .env",
+    "fix": "vendor/bin/php-cs-fixer fix --verbose",
+    "inspect": "vendor/bin/psalm",
+    "link": "bin/symlink-plugin",
+    "shell": "vendor/bin/psysh",
+    "test:acceptance": "vendor/bin/phpunit --testsuite acceptance",
+    "test:functional": "vendor/bin/phpunit --testsuite functional",
+    "test:integration": "vendor/bin/phpunit --testsuite integration",
+    "test:unit": "vendor/bin/phpunit --testsuite unit",
+    "test:wpunit": "vendor/bin/phpunit --testsuite wpunit",
+    "watch": "vendor/bin/phpunit-watcher",
+    "wp": "vendor/bin/wp",
     "build": [
       "@fix",
       "@check",
-      "@analyze",
+      "@inspect",
       "@test"
     ],
-    "link": "bin/symlink-plugin",
-    "wpconfig": "cp -n wp-config-sample.php wp-config.php",
+    "setup": [
+      "@wp core download",
+      "@link"
+    ],
+    "wp:refresh": [
+      "@wp db export",
+      "@wp db clean --yes",
+      "@wp core install"
+    ],
     "post-root-package-install": [
-      "@wpconfig",
+      "@wp core download",
       "@link"
     ],
     "post-create-project-cmd": [

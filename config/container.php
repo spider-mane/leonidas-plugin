@@ -56,7 +56,9 @@ return [
      * are the cleanest solution to building your container.
      *
      */
-    'providers' => [],
+    'providers' => [
+        PseudoVendor\PseudoPlugin\Providers\League\PhoneNumberUtilServiceProvider::class
+    ],
 
     /**
      *==========================================================================

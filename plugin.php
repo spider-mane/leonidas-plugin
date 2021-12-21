@@ -42,6 +42,8 @@ $init = static function () {
     );
 };
 
-did_action('leonidas_init')
+did_action('leonidas_loaded')
     ? $init()
-    : add_action('leonidas_init', $init);
+    : add_action('leonidas_loaded', $init);
+
+unset($init);

@@ -3,7 +3,6 @@
 namespace PseudoVendor\PseudoPlugin\Facades;
 
 use League\Container\Container;
-use Psr\Container\ContainerInterface;
 use WebTheory\Facade\MockeryMockableFacadeBaseTrait;
 
 abstract class _Facade
@@ -13,10 +12,10 @@ abstract class _Facade
     /**
      * @var Container
      */
-    protected static ContainerInterface $container;
+    protected static $container;
 
-    protected function _updateContainer(string $name, object $instance): void
+    final protected function _updateContainer(string $name, object $instance): void
     {
-        static::$container->share($name, $instance);
+        static::$container->addShared($name, $instance);
     }
 }

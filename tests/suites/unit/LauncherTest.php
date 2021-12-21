@@ -1,7 +1,7 @@
 <?php
 
-use PHPUnit\Framework\TestCase;
 use PseudoVendor\PseudoPlugin\Launcher;
+use Tests\Support\TestCase;
 
 class LauncherTest extends TestCase
 {
@@ -10,7 +10,10 @@ class LauncherTest extends TestCase
      */
     protected $launcher;
 
-    public function testInits()
+    /**
+     * @test
+     */
+    public function it_inits()
     {
         Launcher::init(
             plugin_basename(__FILE__),

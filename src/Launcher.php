@@ -3,9 +3,11 @@
 namespace PseudoVendor\PseudoPlugin;
 
 use Leonidas\Contracts\Extension\WpExtensionInterface;
+use Leonidas\Enum\ExtensionType;
 use Leonidas\Framework\Exceptions\InvalidCallToPluginMethodException;
 use Leonidas\Framework\ModuleInitializer;
 use Leonidas\Framework\WpExtension;
+use PseudoVendor\PseudoPlugin\Facades\_Facade;
 use Psr\Container\ContainerInterface;
 
 final class Launcher
@@ -62,24 +64,32 @@ final class Launcher
             'name' => $config('plugin.name'),
             'version' => $config('plugin.version'),
             'slug' => $config('plugin.slug'),
-            'prefix' => $config('plugin.prefix.short'),
+            'prefix' => $config('plugin.prefix'),
             'description' => $config('plugin.description'),
             'base' => $this->base,
             'path' => $this->path,
             'url' => $this->url,
-            'type' => 'plugin',
-            'container' => $this->container,
-            'dev' => $config('plugin.dev'),
             'assets' => $config('plugin.assets'),
+            'dev' => $config('plugin.dev'),
+            'type' => new ExtensionType('plugin'),
+            'container' => $this->container,
         ]);
     }
 
     private function reallyReallyInit(): void
     {
         $this
+            ->bindContainerToFacades()
             ->initializeModules()
             ->requestAssistance()
             ->launchPseudoPlugin();
+    }
+
+    private function bindContainerToFacades(): Launcher
+    {
+        _Facade::_setFacadeContainer($this->container);
+
+        return $this;
     }
 
     private function initializeModules(): Launcher

@@ -1,6 +1,6 @@
 <?php
 
-// ob_start();
+ob_start();
 
 require_once __DIR__ . '/setup.php';
 
@@ -9,7 +9,7 @@ require_once __DIR__ . '/setup.php';
  *
  * @link https://wordpress.org/support/article/debugging-in-wordpress
  */
-define('WP_DEBUG_MODE_CHECKS', false); // used by webtheory/wp-dev
+define('WP_DEBUG_MODE_CHECKS', false); // used by webtheory/wp-test
 define('WP_DEBUG', true);
 define('WP_DEBUG_DISPLAY', true);
 define('WP_DEBUG_LOG', $errorLog);
