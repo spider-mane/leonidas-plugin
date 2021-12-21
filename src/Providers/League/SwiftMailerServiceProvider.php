@@ -15,7 +15,6 @@ class SwiftMailerServiceProvider extends AbstractServiceProvider
         $container = $this->getLeagueContainer();
 
         $container->add(Swift_Mailer::class, function () use ($container) {
-
             $config = $container->get('config')->get('mail');
 
             $transport = (new Swift_SmtpTransport($config['host'], $config['port']))

@@ -26,7 +26,7 @@ class WpAdminFieldFactoryServiceProvider extends AbstractServiceProvider
                 'data_manager_factory' => [
                     'managers' => $config->get('wp.options.data_manager.managers'),
                     'namespaces' => $config->get('wp.options.data_manager.namespaces'),
-                ]
+                ],
             ]);
         });
     }

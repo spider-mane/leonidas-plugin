@@ -7,7 +7,7 @@ use libphonenumber\PhoneNumberFormat;
 
 class Phone extends _Facade
 {
-    public const PATTERN_US =  "(\\d{3})(\\d{3})(\\d{4})";
+    public const PATTERN_US = "(\\d{3})(\\d{3})(\\d{4})";
 
     public const FORMATS_US = [
         'none' => "\$1\$2\$3",

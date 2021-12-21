@@ -18,7 +18,6 @@ class TwigServiceProvider extends AbstractServiceProvider
         $container = $this->getLeagueContainer();
 
         $container->share(Environment::class, function () use ($container) {
-
             $config = $container->get('config')->get('twig', []);
 
             $loader = new FilesystemLoader(

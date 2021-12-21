@@ -19,7 +19,6 @@ class SlimRouterServiceProvider extends AbstractServiceProvider
         $container = $this->getLeagueContainer();
 
         $container->share(RouteCollectorProxyInterface::class, function () use ($container) {
-
             return new RouteCollectorProxy(
                 $container->get(ResponseFactoryInterface::class),
                 new CallableResolver($container),

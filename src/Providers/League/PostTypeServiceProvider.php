@@ -14,7 +14,6 @@ class PostTypeServiceProvider extends AbstractServiceProvider
         $container = $this->getLeagueContainer();
 
         $container->share(Factory::class, function () use ($container) {
-
             return new Factory($container->get('config')->get('wp.option_handlers.post_type'));
         })->addTag('post_type');
     }

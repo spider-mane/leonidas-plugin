@@ -2,7 +2,6 @@
 
 namespace PseudoVendor\PseudoPlugin\Modules;
 
-use Leonidas\Contracts\Extension\ModuleInterface;
 use Leonidas\Contracts\Ui\Asset\ScriptCollectionInterface;
 use Leonidas\Contracts\Ui\Asset\StyleCollectionInterface;
 use Leonidas\Framework\Modules\AbstractAdminAssetProviderModule;

@@ -16,7 +16,7 @@ class FormRepositoryServiceProvider extends AbstractServiceProvider
     {
         $container = $this->getLeagueContainer();
 
-        $container->share(FormRepository::class, function () use ($container) {
+        $container->share(FormRepository::class, function () {
             return new FormRepository();
         });
     }

@@ -14,7 +14,7 @@ class GuzzleResponseFactoryServiceProvider extends AbstractServiceProvider
     {
         $container = $this->getLeagueContainer();
 
-        $container->share(ResponseFactoryInterface::class, function () use ($container) {
+        $container->share(ResponseFactoryInterface::class, function () {
             return new ResponseFactory();
         });
     }
