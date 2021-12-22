@@ -123,6 +123,7 @@ $files = array_merge(
 
   // php boilerplate
   glob($root . '/boot/*.php'),
+  glob($root . '/boot/development/*.php'),
   glob($root . '/config/*.php'),
   glob($root . '/config/development/*.php'),
   glob($root . '/src/*.php'),
