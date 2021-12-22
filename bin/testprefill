@@ -19,6 +19,7 @@ $faker = Factory::create();
 
 $exclude = array_merge(
   [
+    '.env',
     '.idea',
     '.project',
     '.vscode',
@@ -27,6 +28,7 @@ $exclude = array_merge(
     'assets/node_modules',
     'assets/package-lock.json',
     'build',
+    'logs',
     'composer.lock',
     'vendor',
     'wordpress',

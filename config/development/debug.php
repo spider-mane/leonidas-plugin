@@ -1,51 +1,121 @@
 <?php
 
-use Env\Env;
+use function Env\env;
+
+$root = dirname(__DIR__, 2);
 
 return [
 
-    'system' => [
+    /**
+     *==========================================================================
+     * Debug
+     *==========================================================================
+     *
+     *
+     */
+    'enable' => env('DEBUG_ENABLE') ?? true,
 
-        'host_os' => Env::get('HOST_OS'),
+    /**
+     *==========================================================================
+     * Display Errors
+     *==========================================================================
+     *
+     *
+     */
+    'display' => env('DEBUG_DISPLAY') ?? true,
 
-        'host_path' => Env::get('HOST_PATH'),
+    /**
+     *==========================================================================
+     * Error Log
+     *==========================================================================
+     *
+     *
+     */
+    'log' => $root .  '/logs/pseudo-plugin.log',
 
-        'guest_path' => Env::get('GUEST_PATH'),
+    /**
+     *==========================================================================
+     * Editor
+     *==========================================================================
+     *
+     *
+     */
+    'editor' => env('DEBUG_EDITOR') ?? 'phpstorm',
+
+    /**
+     *==========================================================================
+     * Error Logger (Monolog)
+     *==========================================================================
+     *
+     * @link https://seldaek.github.io/monolog
+     */
+    'error_logger' => [
+
+        'channel' => env('LOG_CHANNEL') ?? 'errorlog',
     ],
 
-    'error_log' => [
+    /**
+     *==========================================================================
+     * Error Handler (Whoops)
+     *==========================================================================
+     *
+     * @link http://filp.github.io/whoops
+     * @link https://github.com/nunomaduro/collision
+     */
+    'error_handler' => [
 
-        'file' => 'logs/plugin.log',
+        'host_os' => env('HOST_OS'),
 
-        'channel' => 'errorlog',
+        'host_path' => env('HOST_PATH'),
+
+        'guest_path' => env('GUEST_PATH'),
     ],
 
-    'var_dump' => [
+    /**
+     *==========================================================================
+     * Var Dumper (Symfony)
+     *==========================================================================
+     *
+     * @link https://symfony.com/doc/current/components/var_dumper
+     * @link https://symfony.com/doc/current/components/var_dumper/advanced
+     */
+    'var_dumper' => [
 
-        'theme' => Env::get('VAR_DUMP_THEME') ?? 'dark',
+        'root' => $root,
 
-        'server_host' => Env::get('VAR_DUMP_SERVER_HOST') ?? 'tcp://127.0.0.1:9912',
+        'theme' => env('VAR_DUMP_THEME') ?? 'dark',
+
+        'server_host' => env('VAR_DUMP_SERVER_HOST') ?? 'tcp://127.0.0.1:9912',
     ],
 
-    'file_link' => [
+    /**
+     *==========================================================================
+     * Ini Directives
+     *==========================================================================
+     *
+     * @link https://www.php.net/manual/en/errorfunc.configuration
+     */
+    'ini' => [
 
-        'editor' => Env::get('DEBUG_EDITOR') ?? 'phpstorm',
-
-        'formats' => [
-
-            'atom' => 'atom://core/open/file?filename=%f&line=%l',
-
-            'emacs' => 'emacs://open?url=file://%f&line=%l',
-
-            'macvim' => 'mvim://open?url=file://%f&line=%l',
-
-            'phpstorm' => 'phpstorm://open?file=%f&line=%l',
-
-            'sublime' => 'subl://open?url=file://%f&line=%l',
-
-            'textmate' => 'txmt://open?url=file://%f&line=%l',
-
-            'vscode' => 'vscode://file/%f:%l',
-        ],
+        //
     ],
+
+    /**
+     *==========================================================================
+     * Xdebug Settings
+     *==========================================================================
+     *
+     * @link https://xdebug.org/docs/all_settings
+     */
+    'xdebug' => [
+
+        'cli_color' => 1,
+
+        'var_display_max_children' => 256,
+
+        'var_display_max_data' => 1024,
+
+        'var_display_max_depth' => 10,
+    ],
+
 ];

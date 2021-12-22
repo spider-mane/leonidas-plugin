@@ -116,6 +116,7 @@ $files = array_merge(
   // misc boilerplate
   glob($prefill . '/*'),
   [
+    $root . '/.env.example',
     $root . '/phpcs.xml.dist',
     $root . '/wp-cli.yml',
   ],
@@ -123,6 +124,7 @@ $files = array_merge(
   // php boilerplate
   glob($root . '/boot/*.php'),
   glob($root . '/config/*.php'),
+  glob($root . '/config/development/*.php'),
   glob($root . '/src/*.php'),
   glob($root . '/src/**/*.php'),
   glob($root . '/src/**/**/*.php'),
