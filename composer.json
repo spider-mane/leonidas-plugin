@@ -59,7 +59,8 @@
     "voku/stringy": "^6.4",
     "webtheory/exterminate": "@stable",
     "webtheory/wp-cli-util": "@stable",
-    "webtheory/wp-test": "@stable",
+    "webtheory/wpdmc": "@stable",
+    "webtheory/wpunit": "@stable",
     "wp-cli/wp-cli-bundle": "@stable",
     "wpackagist-theme/twentytwentyone": "@stable"
   },

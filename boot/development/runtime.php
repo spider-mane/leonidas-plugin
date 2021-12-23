@@ -12,7 +12,7 @@ $config = require_once __DIR__ . '/setup.php';
  *
  * @link https://wordpress.org/support/article/debugging-in-wordpress
  */
-define('WP_DEBUG_MODE_CHECKS', false); // used by webtheory/wp-test
+define('WP_DEBUG_MODE_CHECKS', false); // used by webtheory/wpdmc
 define('WP_DEBUG', $config->get('debug.enable'));
 define('WP_DEBUG_DISPLAY', $config->get('debug.display'));
 define('WP_DEBUG_LOG', $config->get('debug.log'));
