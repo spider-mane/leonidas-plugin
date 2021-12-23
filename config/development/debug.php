@@ -31,7 +31,7 @@ return [
      *
      *
      */
-    'log' => $root .  '/logs/pseudo-plugin.log',
+    'log' => "$root/logs/pseudo-plugin.log",
 
     /**
      *==========================================================================
@@ -41,6 +41,22 @@ return [
      *
      */
     'editor' => env('DEBUG_EDITOR') ?? 'phpstorm',
+
+    /**
+     *==========================================================================
+     * Environment
+     *==========================================================================
+     *
+     *
+     */
+    'system' => [
+
+        'host_os' => env('HOST_OS'),
+
+        'host_path' => env('HOST_PATH'),
+
+        'guest_path' => env('GUEST_PATH'),
+    ],
 
     /**
      *==========================================================================
@@ -64,11 +80,7 @@ return [
      */
     'error_handler' => [
 
-        'host_os' => env('HOST_OS'),
-
-        'host_path' => env('HOST_PATH'),
-
-        'guest_path' => env('GUEST_PATH'),
+        // options
     ],
 
     /**
@@ -97,7 +109,7 @@ return [
      */
     'ini' => [
 
-        //
+        // directives
     ],
 
     /**

@@ -9,12 +9,12 @@ $root = dirname(__DIR__, 2);
 require_once "$root/vendor/autoload.php";
 
 /**
- * Capture environment variables from .env file
+ * Load environment variables from .env
  */
 Dotenv::createUnsafeImmutable($root)->load();
 
 /**
- * Capture development configuration
+ * Get development configuration
  */
 $config = new Config("$root/config/development");
 
@@ -26,7 +26,7 @@ define('PSEUDO_CONSTANT_DEVELOPMENT', true);
 /**
  * Initiate debug support
  */
-Exterminator::init($config->get('debug'));
+Exterminator::debug($config->get('debug'));
 
 /**
  * Return development configuration
