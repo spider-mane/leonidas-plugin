@@ -74,6 +74,7 @@ return [
      * Use the textdomain/slug of any such plugin.
      */
     'dependencies' => [
+
         'leonidas',
     ],
 
@@ -86,4 +87,5 @@ return [
      * that should return true if the plugin is in a development environment.
      */
     'dev' => defined('PSEUDO_CONSTANT_DEVELOPMENT'),
+
 ];

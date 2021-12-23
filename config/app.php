@@ -27,5 +27,9 @@ return [
      * bootstrap requirements. Useful for keeping your Launcher class
      * simple and being able to reuse bootstrap processes between extensions.
      */
-    'bootstrap' => [],
+    'bootstrap' => [
+
+        // assistants
+    ],
+
 ];
