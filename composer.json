@@ -107,7 +107,8 @@
     ],
     "post-create-project-cmd": [
       "@wordpress",
-      "bin/composer-prefill"
+      "bin/composer-prefill",
+      "@env"
     ]
   },
   "extra": {
@@ -125,8 +126,11 @@
   },
   "config": {
     "sort-packages": true,
-    "allow-plugins": true,
-    "process-timeout": 0
+    "process-timeout": 0,
+    "allow-plugins": {
+      "composer/installers": true,
+      "composer/package-versions-deprecated": true
+    }
   },
   "minimum-stability": "dev",
   "prefer-stable": true
