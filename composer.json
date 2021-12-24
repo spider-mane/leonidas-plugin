@@ -23,7 +23,7 @@
     }
   ],
   "require": {
-    "php": "^7.4",
+    "php": "^7.4 || ^8.0",
     "giggsey/libphonenumber-for-php": "^8.12",
     "guzzlehttp/psr7": "^1.6",
     "league/container": "^4.2",
@@ -36,7 +36,7 @@
     "webtheory/saveyour": "@stable"
   },
   "require-dev": {
-    "composer/installers": "^2.0",
+    "composer/installers": "^1.0 || ^2.0",
     "fakerphp/faker": "^1.17",
     "filp/whoops": "^2.5",
     "friendsofphp/php-cs-fixer": "^2.15",
@@ -96,7 +96,7 @@
       "@inspect",
       "@test"
     ],
-    "setup": [
+    "wordpress": [
       "@wp core download",
       "@link"
     ],
@@ -105,18 +105,12 @@
       "@wp db clean --yes",
       "@wp core install"
     ],
-    "post-root-package-install": [
-      "@wp core download",
-      "@link"
-    ],
     "post-create-project-cmd": [
+      "@wordpress",
       "bin/composer-prefill"
     ]
   },
   "extra": {
-    "coltrane": {
-      "manage-dependencies": true
-    },
     "installer-paths": {
       "wordpress/wp-content/plugins/{$name}": [
         "type:wordpress-plugin"
@@ -127,8 +121,7 @@
       "wordpress/wp-content/themes/{$name}/": [
         "type:wordpress-theme"
       ]
-    },
-    "wordpress-install-dir": "wordpress"
+    }
   },
   "config": {
     "sort-packages": true,

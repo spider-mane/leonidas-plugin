@@ -3,11 +3,12 @@
 
 use WebTheory\WpCliUtil\WpCliUtil;
 
+$project = 'wordpress-plugin';
+
 $root = dirname(__DIR__, 1);
 
 require_once $root . '/vendor/autoload.php';
 
-$project = 'wordpress-plugin';
 $composer = json_decode(file_get_contents($root . '/composer.json'), true);
 $paths = [
   'wordpress-mixin' => '',
@@ -17,7 +18,7 @@ $paths = [
 ];
 
 $wordpress = WpCliUtil::getInstallPath() ?? 'wordpress';
-$destination = "wp-content/" . $paths[$composer['type'] ?? $project];
+$destination = "wp-content/" . ($paths[$composer['type']] ?? $paths[$project]);
 $path = "$root/$wordpress/$destination";
 
 $link = preg_replace(
