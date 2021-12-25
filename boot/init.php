@@ -9,4 +9,3 @@ if (file_exists($autoload = "$root/vendor/autoload.php")) {
 }
 
 require __DIR__ . '/functions.php';
-require __DIR__ . '/constants.php';

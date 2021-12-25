@@ -20,8 +20,7 @@ final class AdminAssets extends AbstractAdminAssetProviderModule
                 ->src($this->asset('css/styles.css'))
                 ->version($this->version('1.0.0'))
                 ->enqueue(true)
-                ->done()
-
+                ->done(),
         );
     }
 
@@ -34,8 +33,7 @@ final class AdminAssets extends AbstractAdminAssetProviderModule
                 ->version($this->version('1.0.0'))
                 ->inFooter(true)
                 ->enqueue(true)
-                ->done()
-
+                ->done(),
         );
     }
 }

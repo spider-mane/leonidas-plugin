@@ -5,6 +5,7 @@ namespace PseudoVendor\PseudoPlugin;
 use Leonidas\Contracts\Extension\WpExtensionInterface;
 use Leonidas\Enum\ExtensionType;
 use Leonidas\Framework\Exceptions\InvalidCallToPluginMethodException;
+use Leonidas\Framework\Helpers\Plugin;
 use Leonidas\Framework\ModuleInitializer;
 use Leonidas\Framework\WpExtension;
 use PseudoVendor\PseudoPlugin\Facades\_Facade;
@@ -118,10 +119,10 @@ final class Launcher
         return $this;
     }
 
-    public static function init(string $base, string $path, string $url): void
+    public static function init(string $base): void
     {
         if (!self::isLoaded()) {
-            self::reallyInit($base, $path, $url);
+            self::reallyInit($base);
         } else {
             self::throwAlreadyLoadedException(__METHOD__);
         }
@@ -132,10 +133,25 @@ final class Launcher
         return isset(self::$instance) && (self::$instance instanceof self);
     }
 
-    private static function reallyInit(string $base, string $path, string $url): void
+    private static function reallyInit(string $base): void
     {
-        self::$instance = new self($base, $path, $url);
-        self::$instance->reallyReallyInit();
+        require dirname($base) . '/boot/init.php';
+
+        $init = function () use ($base) {
+            self::$instance = new self(
+                Plugin::base($base),
+                Plugin::path($base),
+                Plugin::url($base)
+            );
+
+            self::$instance->reallyReallyInit();
+        };
+
+        if (did_action('leonidas_loaded')) {
+            $init();
+        } else {
+            add_action('leonidas_loaded', $init);
+        }
     }
 
     private static function throwAlreadyLoadedException(callable $method): void
