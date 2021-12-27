@@ -57,7 +57,8 @@ return [
      *
      */
     'providers' => [
-        PseudoVendor\PseudoPlugin\Providers\League\PhoneNumberUtilServiceProvider::class
+
+        // providers
     ],
 
     /**
