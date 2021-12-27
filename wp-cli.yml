@@ -12,7 +12,7 @@ core download:
   skip-content: true
 
 core install:
-  url: http://pseudo-plugin.test
+  url: https://pseudo-plugin.test
   title: Pseudo Plugin
   admin_user: admin
   admin_password: password

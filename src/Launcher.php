@@ -5,7 +5,7 @@ namespace PseudoVendor\PseudoPlugin;
 use Leonidas\Contracts\Extension\WpExtensionInterface;
 use Leonidas\Enum\ExtensionType;
 use Leonidas\Framework\Exceptions\InvalidCallToPluginMethodException;
-use Leonidas\Framework\Helpers\Plugin;
+use Leonidas\Framework\Plugin\Plugin;
 use Leonidas\Framework\ModuleInitializer;
 use Leonidas\Framework\WpExtension;
 use PseudoVendor\PseudoPlugin\Facades\_Facade;
@@ -135,8 +135,6 @@ final class Launcher
 
     private static function reallyInit(string $base): void
     {
-        require dirname($base) . '/boot/init.php';
-
         $init = function () use ($base) {
             self::$instance = new self(
                 Plugin::base($base),

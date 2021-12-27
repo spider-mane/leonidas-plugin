@@ -29,4 +29,7 @@
 
 defined('ABSPATH') || exit;
 
-PseudoVendor\PseudoPlugin\Launcher::init(__FILE__);
+call_user_func(function () {
+    require __DIR__ . '/boot/init.php';
+    PseudoVendor\PseudoPlugin\Launcher::init(__FILE__);
+});
