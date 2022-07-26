@@ -1,0 +1,9 @@
+# globs
+*.log
+*.lock
+
+# folders
+/build
+/dist
+
+# files

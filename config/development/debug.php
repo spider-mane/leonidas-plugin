@@ -56,6 +56,7 @@ return [
         'host_path' => env('HOST_PATH'),
 
         'guest_path' => env('GUEST_PATH'),
+
     ],
 
     /**
@@ -68,6 +69,7 @@ return [
     'error_logger' => [
 
         'channel' => env('LOG_CHANNEL') ?? 'errorlog',
+
     ],
 
     /**
@@ -81,6 +83,7 @@ return [
     'error_handler' => [
 
         // options
+
     ],
 
     /**
@@ -98,6 +101,7 @@ return [
         'theme' => env('VAR_DUMP_THEME') ?? 'dark',
 
         'server_host' => env('VAR_DUMP_SERVER_HOST') ?? 'tcp://127.0.0.1:9912',
+
     ],
 
     /**
@@ -110,6 +114,7 @@ return [
     'ini' => [
 
         // directives
+
     ],
 
     /**
@@ -128,6 +133,7 @@ return [
         'var_display_max_data' => 1024,
 
         'var_display_max_depth' => 10,
+
     ],
 
 ];

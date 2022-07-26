@@ -14,8 +14,9 @@ $prefill = PREFILL_DIRECTORY;
 // allow defaults to be passed to script for testing
 $authorName = $authorName ?? trim(shell_exec('git config user.name'));
 $authorEmail = $authorEmail ?? trim(shell_exec('git config user.email'));
-$pluginSlug = $pluginSlug ?? strtolower(preg_replace('/[^A-Za-z0-9-]+/', '-', basename($root)));;
+$pluginSlug = $pluginSlug ?? strtolower(preg_replace('/[^A-Za-z0-9-]+/', '-', basename($root)));
 $pluginName = $pluginName ?? ucwords(str_replace(['-', '_'], ' ', basename($root)));
+$pluginNamespace = $pluginNamespace ?? str_replace('-', '_', $pluginSlug);
 
 $authorGithub = $authorGithub ?? '';
 $pluginPrefix = $pluginPrefix ?? '';
@@ -35,12 +36,14 @@ $fields = [
 
   'plugin_name' => ['Plugin name', '', $pluginName],
   'plugin_slug' => ['Plugin slug (textdomain)', '', $pluginSlug],
+  'plugin_namespace' => ['Plugin namespace', 'Key-like string to namespace values and contexts', $pluginNamespace],
   'plugin_prefix' => ['Plugin prefix', 'Abbreviated shorthand ideally 3-5 characters', $pluginPrefix],
   'plugin_version' => ['Plugin version', '', $pluginVersion],
   'plugin_website' => ['Plugin website', '', 'https://github.com/{vendor_github}/{plugin_slug}'],
   'plugin_description' => ['Brief description of plugin', '', $pluginDescription],
 
   'psr4_namespace' => ['PSR-4 namespace', 'Vendor\\Plugin', $psr4Namespace],
+  'main_class'
 ];
 
 $replacements = [
@@ -65,6 +68,9 @@ $replacements = [
   },
 
   // data
+  ':plugin_namespace' => function ($values) {
+    return $values['plugin_namespace'];
+  },
   ':plugin_name' => function ($values) {
     return $values['plugin_name'];
   },
@@ -75,6 +81,9 @@ $replacements = [
     return $values['plugin_slug'];
   },
   'pseudo-plugin' => function ($values) {
+    return $values['plugin_slug'];
+  },
+  'leonidas-plugin' => function ($values) {
     return $values['plugin_slug'];
   },
   ':plugin_prefix' => function ($values) {
@@ -116,6 +125,7 @@ $files = array_merge(
   // misc boilerplate
   glob($prefill . '/*'),
   [
+    $prefill . '/.mailmap',
     $root . '/.env.example',
     $root . '/phpcs.xml.dist',
     $root . '/wp-cli.yml',
@@ -126,9 +136,9 @@ $files = array_merge(
   glob($root . '/boot/development/*.php'),
   glob($root . '/config/*.php'),
   glob($root . '/config/development/*.php'),
-  glob($root . '/src/*.php'),
-  glob($root . '/src/**/*.php'),
-  glob($root . '/src/**/**/*.php'),
+  glob($root . '/app/*.php'),
+  glob($root . '/app/**/*.php'),
+  glob($root . '/app/**/**/*.php'),
   glob($root . '/tests/*.php'),
   glob($root . '/tests/**/*.php'),
   glob($root . '/tests/**/**/*.php'),
@@ -175,16 +185,16 @@ $mergeJsonData = [
 
 // files to rename
 $rename = [
-  'src/PseudoPlugin.php' => function ($values) use ($replacements) {
+  'app/PseudoPlugin.php' => function ($values) use ($replacements) {
     return ($replacements['PseudoPlugin'])($values) . '.php';
   },
-  'src/Activation/vPseudoVersion.php' => function ($values) use ($replacements) {
-    return 'v' . ($replacements['PseudoVersion'])($values) . '.php';
-  },
-  '.example.gitattributes' => function () {
+  // 'app/Activation/vPseudoVersion.php' => function ($values) use ($replacements) {
+  //   return 'v' . ($replacements['PseudoVersion'])($values) . '.php';
+  // },
+  '.stub.gitattributes' => function () {
     return '.gitattributes';
   },
-  'assets/.example.gitattributes' => function () {
+  'assets/.stub.gitattributes' => function () {
     return '.gitattributes';
   },
 ];
@@ -250,6 +260,7 @@ echo "\n";
 foreach ($delete as $file) {
   shell_exec("rm -f $root/$file");
 }
+
 // update and relocate boilerplate
 foreach ($files as $file) {
   $contents = file_get_contents($file);
@@ -274,6 +285,7 @@ foreach ($files as $file) {
 
   file_put_contents($file, $contents);
 }
+
 // rename files
 foreach ($rename as $file => $renameFile) {
   $file = realpath("$root/$file");

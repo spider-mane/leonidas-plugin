@@ -13,6 +13,7 @@ return [
     'post-type-name' => [
 
         // args
+
     ],
 
 ];
