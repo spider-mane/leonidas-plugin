@@ -2,13 +2,12 @@
 
 namespace PseudoVendor\PseudoPlugin;
 
-use Leonidas\Contracts\Extension\ExtensionLoaderInterface;
 use Leonidas\Contracts\Extension\WpExtensionInterface;
 use Leonidas\Framework\Plugin\PluginLoader;
 
 final class Launcher
 {
-    private ExtensionLoaderInterface $loader;
+    private PluginLoader $loader;
 
     private WpExtensionInterface $extension;
 
@@ -22,24 +21,24 @@ final class Launcher
 
     private function launch(): void
     {
-        $this->initiate()->boot()->broadcast();
+        $this->initiatePlugin()->bootExtension()->broadcastCompletion();
     }
 
-    private function initiate(): self
+    private function initiatePlugin(): self
     {
         PseudoPlugin::init($this->extension);
 
         return $this;
     }
 
-    private function boot(): self
+    private function bootExtension(): self
     {
         $this->loader->bootstrap();
 
         return $this;
     }
 
-    private function broadcast(): void
+    private function broadcastCompletion(): void
     {
         $this->extension->doAction('loaded');
     }

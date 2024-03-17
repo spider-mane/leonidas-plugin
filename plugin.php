@@ -17,8 +17,8 @@
  * Plugin URI: :plugin_website
  * Description: :plugin_description
  * Version: :plugin_version
- * Requires at least: 5.0
- * Requires PHP: 7.3
+ * Requires at least: 6.0
+ * Requires PHP: 8.0
  * Author: :plugin_author
  * Author URI: :author_website
  * License: MIT
@@ -29,7 +29,6 @@
 
 defined('ABSPATH') || exit;
 
-call_user_func(function () {
-    require __DIR__ . '/boot/init.php';
-    PseudoVendor\PseudoPlugin\Launcher::init(__FILE__);
-});
+(fn () => require __DIR__ . '/boot/init.php')();
+
+PseudoVendor\PseudoPlugin\Launcher::init(__FILE__);

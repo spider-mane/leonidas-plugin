@@ -1,10 +1,5 @@
-# Wordpress
-/wordpress/
-
-# Dev and CI builds
-*.cache
-/.playground
-/.playground.php
+# Local development files
+/@playground
 /build/
 /cache/
 /dist/
@@ -13,25 +8,40 @@
 /storage/logs/
 /storage/temp/
 /temp/
-captainhook.config.json
-cghooks.lock
-docker-compose.override.yml
+/wordpress/
 
 # Composer
 /vendor/
 composer.lock
+/studio.json
+captainhook.config.json
+cghooks.lock
+
+# Npm
+package-lock.json
+
+# Docker
+docker-compose.override.yml
+docker/@local
+
+# Misc Dev
+*.cache
 
 # Env
 *.env
 .env.*
-.*.env
 !.env.example
 
 # Editor/ IDE
 *.code-workspace
-.idea/
-.project/
-.vscode/
+.vscode
+.idea
+.project
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
 
 # System files
 .DS_Store

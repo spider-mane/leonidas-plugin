@@ -1,6 +1,7 @@
 {
   "private": true,
   "scripts": {
+    "lint": "npx eslint src/ts",
     "mix": "mix",
     "mix:prod": "mix --production",
     "nuke": "rm package-lock.json && rm -rf node_modules",
@@ -23,6 +24,7 @@
     "browser-sync-webpack-plugin": "^2.3.0",
     "css-loader": "^6.7.1",
     "eslint": "^8.20.0",
+    "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-jsdoc": "^39.3.3",
     "eslint-plugin-jsx-a11y": "^6.6.1",
     "eslint-plugin-react": "^7.30.1",
@@ -47,6 +49,7 @@
   "dependencies": {
     "axios": "^0.27.2",
     "lodash": "^4.17.21",
+    "react": "^18.2.0",
     "wpapi": "^1.2.2"
   }
 }

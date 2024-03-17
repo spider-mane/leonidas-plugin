@@ -1,0 +1,11 @@
+// For format details, see https://aka.ms/devcontainer.json.
+{
+  "name": ":plugin_name",
+  "dockerComposeFile": [
+    "../docker-compose.yml",
+    "../docker-compose.override.yml"
+  ],
+  "service": "app",
+  "workspaceFolder": "/var/www/html",
+  "shutdownAction": "none"
+}
